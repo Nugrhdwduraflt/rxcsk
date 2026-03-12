@@ -1,0 +1,3539 @@
+local c = game:GetService("Players")
+local X = game:GetService("CoreGui")
+local V = game:GetService("UserInputService")
+local L = game:GetService("VirtualInputManager")
+local d = c.LocalPlayer
+local i = game:GetService("TweenService")
+local j = "RAFLYXCILLO_v2"
+
+if X:FindFirstChild("RAFLYXCILLO") then
+    print("⛔ RAFLYXCILLO sudah berjalan! Tutup dulu sebelum execute ulang.")
+    return
+end
+
+local g = true
+_G[j] = function()
+    g = false
+    if X:FindFirstChild("RAFLYXCILLO") then
+        X.RAFLYXCILLO:Destroy()
+    end
+end
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    pcall(function()
+        local c = game:GetService("CoreGui").RobloxGui.FocusNavigationCoreScriptsWrapper
+        c.Visible = false
+    end)
+end)
+
+local Y = V.TouchEnabled
+local w = Y and 300 or 460
+local x = Y and 250 or 310
+local t = Y and 85 or 105
+local J = Y and 42 or 46
+local m = Y and 9 or 11
+local Z = Y and 32 or 36
+local Q = Y and 10 or 12
+local q = Y and 13 or 15
+
+local function R(c)
+    return c.UserInputType == Enum.UserInputType.MouseButton1 or c.UserInputType == Enum.UserInputType.Touch
+end
+
+local function r(c)
+    return c.UserInputType == Enum.UserInputType.MouseMovement or c.UserInputType == Enum.UserInputType.Touch
+end
+
+local function a()
+    local c = Instance.new("Sound")
+    c.SoundId = "rbxassetid://139658322785649"
+    c.Volume = .5
+    c.Parent = game:GetService("SoundService")
+    c:Play()
+    game:GetService("Debris"):AddItem(c, 1)
+end
+
+local C = {
+    {name = "BambuApi", label = "Api", rarity = "Spesial", color = Color3.fromRGB(255, 100, 30)},
+    {name = "BambuAwan", label = "Awan", rarity = "Baru", color = Color3.fromRGB(180, 220, 255)},
+    {name = "BambuBayang", label = "Bayang", rarity = "Baru", color = Color3.fromRGB(60, 20, 100)},
+    {name = "BambuHati", label = "Hati", rarity = "Baru", color = Color3.fromRGB(255, 80, 120)},
+    {name = "BambuMetalik", label = "Metalik", rarity = "Spesial", color = Color3.fromRGB(180, 180, 200)},
+    {name = "BambuPelangi", label = "Pelangi", rarity = "Spesial", color = Color3.fromRGB(255, 100, 200)}
+}
+
+local l = {
+    Biasa = Color3.fromRGB(180, 180, 180),
+    Langka = Color3.fromRGB(80, 150, 255),
+    Spesial = Color3.fromRGB(255, 60, 60),
+    Baru = Color3.fromRGB(200, 80, 255)
+}
+
+local function S(c)
+    local X = {}
+    for c, V in ipairs(c:GetDescendants()) do
+        if V:IsA("Attachment") and not X[V.Name] then
+            X[V.Name] = V
+        end
+    end
+    for c, V in ipairs(c:GetDescendants()) do
+        if V:IsA("Beam") then
+            local c = V.Attachment0 and V.Attachment0.Name
+            local L = V.Attachment1 and V.Attachment1.Name
+            if c and X[c] then
+                V.Attachment0 = X[c]
+            end
+            if L and X[L] then
+                V.Attachment1 = X[L]
+            end
+        end
+    end
+end
+
+local function b(c, X, V)
+    local L = c:FindFirstChild(V)
+    local d = X:FindFirstChild(V)
+    if not L or not d then
+        return
+    end
+    for c, X in ipairs(L:GetChildren()) do
+        if not X:IsA("WeldConstraint") then
+            X:Destroy()
+        end
+    end
+    pcall(function()
+        L.Color = d.Color
+        L.Material = d.Material
+        L.Transparency = d.Transparency
+        if L:IsA("UnionOperation") then
+            L.UsePartColor = true
+        end
+    end)
+    local i = d:Clone()
+    i:PivotTo(L:GetPivot())
+    for c, X in ipairs(i:GetChildren()) do
+        if not X:IsA("WeldConstraint") then
+            X.Parent = L
+        end
+    end
+    i:Destroy()
+    for c, X in ipairs(L:GetDescendants()) do
+        if X:IsA("ParticleEmitter") then
+            X.Enabled = true
+            X:Clear()
+        end
+    end
+end
+
+local function s(c)
+    local X = d.Character
+    if not X then return end
+    local V = workspace:FindFirstChild("BambuDisplay") and workspace.BambuDisplay:FindFirstChild("Bambu")
+    if not V then return end
+    local L = V:FindFirstChild(c)
+    if not L then return end
+    local i = workspace:FindFirstChild(d.Name)
+    local j = i and i:FindFirstChild("BackWeapon")
+    if not j then
+        j = X:FindFirstChild("BackWeapon")
+    end
+    if not j then return end
+    b(j, L, "Batang")
+    b(j, L, "Ruas")
+    S(j)
+    print("[Skin] Applied: " .. c)
+end
+
+local N = {
+    CYBERPUNK = {primary = Color3.fromRGB(100, 30, 220), mid = Color3.fromRGB(65, 15, 160), dark = Color3.fromRGB(30, 10, 100), headerBg = Color3.fromRGB(55, 15, 120), accent = Color3.fromRGB(150, 80, 255), glow = Color3.fromRGB(100, 40, 200), activeTab = Color3.fromRGB(65, 20, 150), logText = Color3.fromRGB(160, 100, 255)},
+    CRIMSON = {primary = Color3.fromRGB(200, 20, 40), mid = Color3.fromRGB(150, 15, 30), dark = Color3.fromRGB(80, 8, 16), headerBg = Color3.fromRGB(120, 10, 25), accent = Color3.fromRGB(255, 80, 100), glow = Color3.fromRGB(200, 30, 50), activeTab = Color3.fromRGB(160, 15, 35), logText = Color3.fromRGB(255, 100, 120)},
+    MATRIX = {primary = Color3.fromRGB(0, 180, 60), mid = Color3.fromRGB(0, 130, 40), dark = Color3.fromRGB(0, 60, 20), headerBg = Color3.fromRGB(0, 80, 25), accent = Color3.fromRGB(50, 255, 120), glow = Color3.fromRGB(0, 160, 60), activeTab = Color3.fromRGB(0, 110, 40), logText = Color3.fromRGB(80, 255, 140)},
+    SAKURA = {primary = Color3.fromRGB(210, 60, 140), mid = Color3.fromRGB(170, 40, 110), dark = Color3.fromRGB(100, 20, 65), headerBg = Color3.fromRGB(130, 30, 85), accent = Color3.fromRGB(255, 130, 200), glow = Color3.fromRGB(210, 70, 150), activeTab = Color3.fromRGB(160, 40, 110), logText = Color3.fromRGB(255, 150, 210)},
+    OCEAN = {primary = Color3.fromRGB(0, 100, 220), mid = Color3.fromRGB(0, 70, 170), dark = Color3.fromRGB(0, 35, 100), headerBg = Color3.fromRGB(0, 55, 130), accent = Color3.fromRGB(60, 160, 255), glow = Color3.fromRGB(0, 110, 220), activeTab = Color3.fromRGB(0, 75, 170), logText = Color3.fromRGB(80, 180, 255)},
+    FLAME = {primary = Color3.fromRGB(220, 100, 0), mid = Color3.fromRGB(180, 70, 0), dark = Color3.fromRGB(100, 35, 0), headerBg = Color3.fromRGB(140, 55, 0), accent = Color3.fromRGB(255, 160, 50), glow = Color3.fromRGB(220, 110, 0), activeTab = Color3.fromRGB(170, 65, 0), logText = Color3.fromRGB(255, 180, 70)}
+}
+
+local H = "CYBERPUNK"
+local F = {}
+
+local function K(c)
+    local X = N[c]
+    if not X then return end
+    H = c
+    if F.Header then F.Header.BackgroundColor3 = X.headerBg end
+    if F.HeaderGrad then F.HeaderGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, X.primary), ColorSequenceKeypoint.new(.6, X.mid), ColorSequenceKeypoint.new(1, X.dark)}) end
+    if F.HeaderCover then F.HeaderCover.BackgroundColor3 = X.headerBg end
+    if F.HeaderLine then F.HeaderLine.BackgroundColor3 = X.accent end
+    if F.LineGrad then F.LineGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, X.accent), ColorSequenceKeypoint.new(.5, Color3.new(1, 1, 1)), ColorSequenceKeypoint.new(1, X.accent)}) end
+    if F.HeaderDot then F.HeaderDot.BackgroundColor3 = X.accent end
+    if F.PremBadge then F.PremBadge.BackgroundColor3 = X.mid end
+    if F.BadgeGrad then F.BadgeGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, X.accent), ColorSequenceKeypoint.new(1, X.primary)}) end
+    if F.GlowWrapper then F.GlowWrapper.BackgroundColor3 = X.glow end
+    if F.SideDivider then F.SideDivider.BackgroundColor3 = X.mid end
+    if F.DivGrad then F.DivGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, X.mid), ColorSequenceKeypoint.new(.5, X.accent), ColorSequenceKeypoint.new(1, X.mid)}) end
+    if F.MiniIconStroke then F.MiniIconStroke.Color = X.accent end
+    if F.MiniIcon then F.MiniIcon.BackgroundColor3 = X.headerBg end
+    if F.DropMainBtn then F.DropMainBtn.BackgroundColor3 = X.mid end
+    if F.dropBtnGrad then F.dropBtnGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, X.primary), ColorSequenceKeypoint.new(1, X.dark)}) end
+    if F.dropStroke then F.dropStroke.Color = X.mid end
+    if F.logStroke then F.logStroke.Color = X.mid end
+    if F.LogAwalan then F.LogAwalan.TextColor3 = X.logText end
+    if F.ScrollBar then F.ScrollBar.ScrollBarImageColor3 = X.accent end
+    for c, V in pairs(F) do
+        if type(V) == "table" and V.fill then
+            V.fill.BackgroundColor3 = X.primary
+            V.knobMinStroke.Color = X.accent
+            V.knobMaxStroke.Color = X.accent
+            V.knobMax.BackgroundColor3 = X.accent
+            V.valLbl.TextColor3 = X.logText
+        end
+    end
+    if F.activeTabColor then F.activeTabColor.value = X.activeTab end
+    if F.SkinDropBtn then F.SkinDropBtn.BackgroundColor3 = X.mid end
+    if F.SkinDropGrad then F.SkinDropGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, X.primary), ColorSequenceKeypoint.new(1, X.dark)}) end
+    if F.SkinDropStroke then F.SkinDropStroke.Color = X.mid end
+    if F.SkinFrameStroke then F.SkinFrameStroke.Color = X.mid end
+    if F.SkinInfoText then F.SkinInfoText.TextColor3 = X.logText end
+    if F.ResizeHandle then F.ResizeHandle.BackgroundColor3 = X.mid end
+    if F.ResizeStroke then F.ResizeStroke.Color = X.accent end
+    if F.FakeLabel then F.FakeLabel.TextColor3 = X.accent end
+    if F.FakeNameStroke then F.FakeNameStroke.Color = X.mid end
+    if F.StreakLabel then F.StreakLabel.TextColor3 = X.accent end
+    if F.StreakBoxStroke then F.StreakBoxStroke.Color = X.mid end
+    if F.tuyulStroke then F.tuyulStroke.Color = X.accent end
+    if F.tuyulHeader then F.tuyulHeader.TextColor3 = X.accent end
+    if F.tuyulStatus then F.tuyulStatus.TextColor3 = X.accent end
+    if F.themeBtnStroke then F.themeBtnStroke.Color = X.accent end
+    if F.themeDFStroke then F.themeDFStroke.Color = X.mid end
+    if F.UtilScrollBar then F.UtilScrollBar.ScrollBarImageColor3 = X.accent end
+    if F.pcStroke then F.pcStroke.Color = X.accent end
+    if F.scStroke then F.scStroke.Color = X.accent end
+    if F.ncStroke then F.ncStroke.Color = X.accent end
+    if F.cscStroke then F.cscStroke.Color = X.accent end
+    if F.vcStroke then F.vcStroke.Color = X.accent end
+    if F.SetNameBtn then F.SetNameBtn.BackgroundColor3 = X.primary end
+    if F.sbg then F.sbg.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, X.accent), ColorSequenceKeypoint.new(1, X.mid)}) end
+    if F.SetStreakBtn then F.SetStreakBtn.BackgroundColor3 = X.primary end
+    if F.sskgb then F.sskgb.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, X.accent), ColorSequenceKeypoint.new(1, X.mid)}) end
+    if F.statValRefs then
+        for c, X in ipairs(F.statValRefs) do end
+    end
+end
+
+local O = Instance.new("ScreenGui")
+O.Name = "RAFLYXCILLO"
+O.Parent = pcall(function() return X.Name end) and X or d:WaitForChild("PlayerGui")
+O.ResetOnSpawn = false
+O.IgnoreGuiInset = true
+
+local W = Instance.new("Frame")
+W.Name = "GlowWrapper"
+W.Size = UDim2.new(0, w + 4, 0, x + 4)
+W.Position = UDim2.new(.5, -(w / 2) - 2, .5, -(x / 2) - 2)
+W.BackgroundColor3 = Color3.fromRGB(100, 40, 200)
+W.BackgroundTransparency = .6
+W.BorderSizePixel = 0
+W.ZIndex = 0
+W.Parent = O
+Instance.new("UICorner", W).CornerRadius = UDim.new(0, 18)
+
+local y = Instance.new("Frame")
+y.Name = "MainFrame"
+y.Size = UDim2.new(0, w, 0, x)
+y.Position = UDim2.new(.5, -w / 2, .5, -x / 2)
+y.BackgroundColor3 = Color3.fromRGB(7, 7, 13)
+y.BorderSizePixel = 0
+y.ClipsDescendants = true
+y.Parent = O
+Instance.new("UICorner", y).CornerRadius = UDim.new(0, 16)
+
+local p = Instance.new("TextButton")
+p.Name = "ResizeHandle"
+p.Size = UDim2.new(0, 24, 0, 24)
+p.BackgroundColor3 = Color3.fromRGB(65, 15, 160)
+p.Text = "↩️"
+p.TextColor3 = Color3.fromRGB(200, 160, 255)
+p.Font = Enum.Font.GothamBold
+p.TextSize = Y and 12 or 14
+p.ZIndex = 10
+p.Parent = O
+Instance.new("UICorner", p).CornerRadius = UDim.new(0, 8)
+
+ResizeStroke = Instance.new("UIStroke", p)
+ResizeStroke.Color = Color3.fromRGB(150, 80, 255)
+ResizeStroke.Thickness = 1.5
+ResizeStroke.Transparency = .1
+F.ResizeHandle = p
+F.ResizeStroke = ResizeStroke
+
+local function P()
+    local c = y.Position
+    local X = y.Size
+    local V = p.Size.X.Offset
+    p.Position = UDim2.new(c.X.Scale, (c.X.Offset + X.X.Offset) - V, c.Y.Scale, (c.Y.Offset + X.Y.Offset) - V)
+end
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if y.Visible then
+        P()
+    end
+end)
+P()
+
+local E = false
+local f, o, e
+
+local function G(c, X)
+    return math.clamp(c, Y and 260 or 300, Y and 500 or 720), math.clamp(X, Y and 200 or 230, Y and 480 or 600)
+end
+
+local function T()
+    local c = y.Position
+    W.Position = UDim2.new(c.X.Scale, c.X.Offset - 2, c.Y.Scale, c.Y.Offset - 2)
+    W.Size = UDim2.new(0, y.Size.X.Offset + 4, 0, y.Size.Y.Offset + 4)
+    P()
+end
+
+p.InputBegan:Connect(function(c)
+    if not R(c) then return end
+    E = true
+    f = c.Position
+    o = y.Size.X.Offset
+    e = y.Size.Y.Offset
+    c.Changed:Connect(function()
+        if c.UserInputState == Enum.UserInputState.End then
+            E = false
+        end
+    end)
+end)
+
+local B = Instance.new("Frame")
+B.Name = "Header"
+B.Size = UDim2.new(1, 0, 0, J)
+B.BackgroundColor3 = Color3.fromRGB(55, 15, 120)
+B.BorderSizePixel = 0
+B.Parent = y
+Instance.new("UICorner", B).CornerRadius = UDim.new(0, 16)
+
+HeaderCover = Instance.new("Frame")
+HeaderCover.Size = UDim2.new(1, 0, .5, 0)
+HeaderCover.Position = UDim2.new(0, 0, .5, 0)
+HeaderCover.BackgroundColor3 = Color3.fromRGB(55, 15, 120)
+HeaderCover.BorderSizePixel = 0
+HeaderCover.Parent = B
+HeaderCover.ZIndex = B.ZIndex - 1
+
+HeaderGrad = Instance.new("UIGradient", B)
+HeaderGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(100, 30, 220)), ColorSequenceKeypoint.new(.6, Color3.fromRGB(65, 15, 160)), ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 10, 100))})
+HeaderGrad.Rotation = 135
+
+HeaderLine = Instance.new("Frame")
+HeaderLine.Size = UDim2.new(1, 0, 0, 1)
+HeaderLine.Position = UDim2.new(0, 0, 1, -1)
+HeaderLine.BackgroundColor3 = Color3.fromRGB(150, 80, 255)
+HeaderLine.BorderSizePixel = 0
+HeaderLine.Parent = B
+
+LineGrad = Instance.new("UIGradient", HeaderLine)
+LineGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(150, 80, 255)), ColorSequenceKeypoint.new(.5, Color3.fromRGB(200, 130, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(150, 80, 255))})
+
+HeaderDot = Instance.new("Frame")
+HeaderDot.Size = UDim2.new(0, 7, 0, 7)
+HeaderDot.Position = UDim2.new(0, 10, .5, -3.5)
+HeaderDot.BackgroundColor3 = Color3.fromRGB(180, 120, 255)
+HeaderDot.BorderSizePixel = 0
+HeaderDot.Parent = B
+Instance.new("UICorner", HeaderDot).CornerRadius = UDim.new(1, 0)
+
+local n = Instance.new("TextLabel")
+n.Size = UDim2.new(0, 140, 1, 0)
+n.Position = UDim2.new(0, 22, 0, 0)
+n.BackgroundTransparency = 1
+n.Text = "RAFLYXCILLO"
+n.TextColor3 = Color3.new(1, 1, 1)
+n.Font = Enum.Font.GothamBold
+n.TextSize = q
+n.TextXAlignment = Enum.TextXAlignment.Left
+n.Parent = B
+
+F.Header = B
+F.HeaderGrad = HeaderGrad
+F.HeaderCover = HeaderCover
+F.HeaderLine = HeaderLine
+F.LineGrad = LineGrad
+F.HeaderDot = HeaderDot
+
+if not Y then
+    local c = Instance.new("Frame")
+    c.Size = UDim2.new(0, 64, 0, 17)
+    c.Position = UDim2.new(0, 130, .5, -8.5)
+    c.BackgroundColor3 = Color3.fromRGB(120, 60, 220)
+    c.BorderSizePixel = 0
+    c.Parent = B
+    Instance.new("UICorner", c).CornerRadius = UDim.new(1, 0)
+    
+    BadgeGrad = Instance.new("UIGradient", c)
+    BadgeGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(160, 80, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 40, 200))})
+    
+    local X = Instance.new("TextLabel")
+    X.Size = UDim2.new(1, 0, 1, 0)
+    X.BackgroundTransparency = 1
+    X.Text = "PREMIUM"
+    X.TextColor3 = Color3.new(1, 1, 1)
+    X.Font = Enum.Font.GothamBold
+    X.TextSize = 9
+    X.Parent = c
+    F.PremBadge = c
+    F.BadgeGrad = BadgeGrad
+end
+
+F.GlowWrapper = W
+local h = Y and 18 or 26
+
+local z = Instance.new("TextButton")
+z.Size = UDim2.new(0, h, 0, h)
+z.Position = UDim2.new(1, -(h * 2 + 10), .5, -h / 2)
+z.BackgroundColor3 = Color3.fromRGB(250, 190, 0)
+z.Text = "➖"
+z.TextColor3 = Color3.fromRGB(30, 20, 0)
+z.Font = Enum.Font.GothamBold
+z.TextSize = Y and 11 or 16
+z.Parent = B
+Instance.new("UICorner", z).CornerRadius = UDim.new(1, 0)
+
+local U = Instance.new("TextButton")
+U.Size = UDim2.new(0, h, 0, h)
+U.Position = UDim2.new(1, -(h + 6), .5, -h / 2)
+U.BackgroundColor3 = Color3.fromRGB(240, 50, 60)
+U.Text = "✖️"
+U.TextColor3 = Color3.new(1, 1, 1)
+U.Font = Enum.Font.GothamBold
+U.TextSize = Y and 14 or 11
+U.Parent = B
+Instance.new("UICorner", U).CornerRadius = UDim.new(1, 0)
+
+local v = Instance.new("Frame")
+v.Name = "Sidebar"
+v.Size = UDim2.new(0, t, 1, -J)
+v.Position = UDim2.new(0, 0, 0, J)
+v.BackgroundColor3 = Color3.fromRGB(11, 11, 18)
+v.BorderSizePixel = 0
+v.Parent = y
+Instance.new("UICorner", v).CornerRadius = UDim.new(0, 16)
+
+SideDivider = Instance.new("Frame")
+SideDivider.Size = UDim2.new(0, 1, 1, -J)
+SideDivider.Position = UDim2.new(0, t, 0, J)
+SideDivider.BackgroundColor3 = Color3.fromRGB(70, 30, 140)
+SideDivider.BorderSizePixel = 0
+SideDivider.Parent = y
+
+DivGrad = Instance.new("UIGradient", SideDivider)
+DivGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(70, 30, 140)), ColorSequenceKeypoint.new(.5, Color3.fromRGB(130, 60, 220)), ColorSequenceKeypoint.new(1, Color3.fromRGB(70, 30, 140))})
+DivGrad.Rotation = 90
+F.SideDivider = SideDivider
+F.DivGrad = DivGrad
+
+SideLayout = Instance.new("UIListLayout")
+SideLayout.Padding = UDim.new(0, Y and 4 or 5)
+SideLayout.SortOrder = Enum.SortOrder.LayoutOrder
+SideLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+SideLayout.Parent = v
+
+SidePad = Instance.new("UIPadding", v)
+SidePad.PaddingTop = UDim.new(0, Y and 8 or 12)
+SidePad.PaddingLeft = UDim.new(0, Y and 4 or 7)
+SidePad.PaddingRight = UDim.new(0, Y and 4 or 7)
+
+local A = {}
+local function M(c, X, V)
+    local L = Instance.new("TextButton")
+    L.Size = UDim2.new(1, 0, 0, Y and 38 or 40)
+    L.LayoutOrder = V
+    L.BackgroundColor3 = Color3.fromRGB(20, 18, 32)
+    L.Text = Y and X .. ("\n" .. c) or X .. ("  " .. c)
+    L.TextColor3 = Color3.fromRGB(120, 110, 150)
+    L.Font = Enum.Font.GothamBold
+    L.TextSize = m
+    L.TextXAlignment = Y and Enum.TextXAlignment.Center or Enum.TextXAlignment.Left
+    L.TextWrapped = true
+    L.Parent = v
+    Instance.new("UICorner", L).CornerRadius = UDim.new(0, 9)
+    
+    local d = Instance.new("UIStroke", L)
+    d.Color = Color3.fromRGB(50, 30, 90)
+    d.Thickness = 1
+    d.Transparency = .6
+    
+    if not Y then
+        local c = Instance.new("UIPadding", L)
+        c.PaddingLeft = UDim.new(0, 10)
+    end
+    table.insert(A, {btn = L, stroke = d})
+    return L
+end
+
+local function I(c)
+    for c, X in pairs(A) do
+        X.btn.BackgroundColor3 = Color3.fromRGB(20, 18, 32)
+        X.btn.TextColor3 = Color3.fromRGB(120, 110, 150)
+        X.stroke.Color = Color3.fromRGB(50, 30, 90)
+        X.stroke.Transparency = .6
+    end
+    local X = N[H] and N[H].activeTab or Color3.fromRGB(65, 20, 150)
+    local V = N[H] and N[H].accent or Color3.fromRGB(150, 80, 255)
+    c.BackgroundColor3 = X
+    c.TextColor3 = Color3.new(1, 1, 1)
+    for X, L in pairs(A) do
+        if L.btn == c then
+            L.stroke.Color = V
+            L.stroke.Transparency = .1
+        end
+    end
+end
+
+local D = M("INFO", "📋", 0)
+local k = M("MAIN", "⚡", 1)
+local u = M("FAKE", "🎭", 2)
+local cr = M("UTIL", "🔧", 3)
+local Xr = M("SKIN", "🎒", 4)
+local Vr = M("NYAWA", "❤️", 5)
+local Lr = t + 7
+
+local dr = Instance.new("Frame")
+dr.Size = UDim2.new(1, -(Lr + 4), 1, -(J + 6))
+dr.Position = UDim2.new(0, Lr, 0, J + 4)
+dr.BackgroundTransparency = 1
+dr.Parent = y
+
+local ir = Instance.new("ImageButton")
+ir.Name = "RAFLYMiniIcon"
+ir.Size = UDim2.new(0, Y and 35 or 52, 0, Y and 35 or 52)
+ir.Position = UDim2.new(0, 10, .5, -26)
+ir.BackgroundColor3 = Color3.fromRGB(55, 15, 130)
+ir.Image = "rbxassetid://9836076474"
+ir.Visible = false
+ir.BorderSizePixel = 0
+ir.Parent = O
+Instance.new("UICorner", ir).CornerRadius = UDim.new(0, 14)
+
+local jr = Instance.new("UIStroke", ir)
+jr.Color = Color3.fromRGB(150, 80, 255)
+jr.Thickness = 2
+jr.Transparency = .1
+F.MiniIcon = ir
+F.MiniIconStroke = jr
+
+local gr = 0
+z.MouseButton1Click:Connect(function()
+    a()
+    y.Visible = false
+    W.Visible = false
+    p.Visible = false
+    ir.Visible = true
+    gr = 0
+end)
+
+local Yr, wr, xr
+ir.InputBegan:Connect(function(c)
+    if not R(c) then return end
+    Yr = true
+    gr = 0
+    wr = c.Position
+    xr = ir.Position
+    c.Changed:Connect(function()
+        if c.UserInputState == Enum.UserInputState.End then
+            Yr = false
+        end
+    end)
+end)
+
+ir.InputEnded:Connect(function(c)
+    if c.UserInputType == Enum.UserInputType.Touch then
+        Yr = false
+        local X = wr and (c.Position - wr).Magnitude or 999
+        if X <= 12 then
+            a()
+            y.Visible = true
+            W.Visible = true
+            p.Visible = true
+            ir.Visible = false
+        end
+        gr = 0
+    end
+end)
+
+ir.MouseButton1Click:Connect(function()
+    if Y then return end
+    if gr > 10 then
+        gr = 0
+        return
+    end
+    a()
+    y.Visible = true
+    W.Visible = true
+    p.Visible = true
+    ir.Visible = false
+    gr = 0
+end)
+
+local function tr()
+    local c = Instance.new("ScrollingFrame")
+    c.Size = UDim2.new(1, 0, 1, 0)
+    c.BackgroundTransparency = 1
+    c.Visible = false
+    c.ScrollBarThickness = 0
+    c.Parent = dr
+    return c
+end
+
+local Jr, mr, Zr, Qr, qr, Rr, rr, ar, Cr
+Jr = tr()
+Jr.ScrollingDirection = Enum.ScrollingDirection.Y
+Jr.CanvasSize = UDim2.new(0, 0, 0, 0)
+Jr.AutomaticCanvasSize = Enum.AutomaticSize.Y
+Jr.ScrollBarThickness = Y and 3 or 2
+Jr.ScrollBarImageColor3 = Color3.fromRGB(150, 80, 255)
+Jr.ScrollBarImageTransparency = 0
+
+InfoPad = Instance.new("UIPadding", Jr)
+InfoPad.PaddingLeft = UDim.new(0, 6)
+InfoPad.PaddingRight = UDim.new(0, 6)
+InfoPad.PaddingTop = UDim.new(0, 8)
+InfoPad.PaddingBottom = UDim.new(0, 10)
+
+InfoLayout = Instance.new("UIListLayout")
+InfoLayout.Padding = UDim.new(0, 8)
+InfoLayout.SortOrder = Enum.SortOrder.LayoutOrder
+InfoLayout.Parent = Jr
+
+local lr = Instance.new("Frame")
+lr.Size = UDim2.new(1, 0, 0, Y and 80 or 90)
+lr.LayoutOrder = 1
+lr.BackgroundColor3 = Color3.fromRGB(14, 12, 24)
+lr.BorderSizePixel = 0
+lr.Parent = Jr
+Instance.new("UICorner", lr).CornerRadius = UDim.new(0, 12)
+
+pcStroke = Instance.new("UIStroke", lr)
+pcStroke.Color = Color3.fromRGB(90, 40, 180)
+pcStroke.Thickness = 1.5
+pcStroke.Transparency = .2
+F.pcStroke = pcStroke
+
+local Sr = Instance.new("Frame")
+Sr.Size = UDim2.new(0, Y and 54 or 64, 0, Y and 54 or 64)
+Sr.Position = UDim2.new(0, 10, .5, -(Y and 27 or 32))
+Sr.BackgroundColor3 = Color3.fromRGB(30, 20, 60)
+Sr.BorderSizePixel = 0
+Sr.Parent = lr
+Instance.new("UICorner", Sr).CornerRadius = UDim.new(1, 0)
+
+afStroke = Instance.new("UIStroke", Sr)
+afStroke.Color = Color3.fromRGB(130, 60, 255)
+afStroke.Thickness = 2
+afStroke.Transparency = .1
+
+local br = Instance.new("ImageLabel")
+br.Size = UDim2.new(1, -4, 1, -4)
+br.Position = UDim2.new(0, 2, 0, 2)
+br.BackgroundTransparency = 1
+br.Image = ""
+br.ScaleType = Enum.ScaleType.Crop
+br.Parent = Sr
+
+task.spawn(function()
+    local X, V = pcall(function() return c:GetUserThumbnailAsync(d.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150) end)
+    if X and V then
+        br.Image = V
+    end
+end)
+Instance.new("UICorner", br).CornerRadius = UDim.new(1, 0)
+
+local sr = (Y and 54 or 64) + 20
+local Nr = Instance.new("TextLabel")
+Nr.Size = UDim2.new(1, -(sr + 8), 0, 22)
+Nr.Position = UDim2.new(0, sr, 0, Y and 14 or 18)
+Nr.BackgroundTransparency = 1
+Nr.Text = d.DisplayName
+Nr.TextColor3 = Color3.new(1, 1, 1)
+Nr.Font = Enum.Font.GothamBold
+Nr.TextSize = Y and 13 or 15
+Nr.TextXAlignment = Enum.TextXAlignment.Left
+Nr.Parent = lr
+
+local Hr = Instance.new("TextLabel")
+Hr.Size = UDim2.new(1, -(sr + 8), 0, 18)
+Hr.Position = UDim2.new(0, sr, 0, Y and 34 or 40)
+Hr.BackgroundTransparency = 1
+Hr.Text = "@" .. d.Name
+Hr.TextColor3 = Color3.fromRGB(130, 110, 180)
+Hr.Font = Enum.Font.Gotham
+Hr.TextSize = Y and 10 or 11
+Hr.TextXAlignment = Enum.TextXAlignment.Left
+Hr.Parent = lr
+
+local Fr = d.UserId == 10109673684 or d.UserId == 10627496254
+local Kr = Instance.new("Frame")
+Kr.Size = UDim2.new(0, 70, 0, 16)
+Kr.Position = UDim2.new(0, sr, 0, Y and 53 or 60)
+Kr.BorderSizePixel = 0
+Kr.Parent = lr
+Instance.new("UICorner", Kr).CornerRadius = UDim.new(1, 0)
+
+rbGrad = Instance.new("UIGradient", Kr)
+if Fr then
+    Kr.BackgroundColor3 = Color3.fromRGB(80, 30, 180)
+    rbGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(130, 50, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(80, 20, 180))})
+else
+    Kr.BackgroundColor3 = Color3.fromRGB(40, 40, 80)
+    rbGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(80, 80, 160)), ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 40, 100))})
+end
+
+RoleText = Instance.new("TextLabel")
+RoleText.Size = UDim2.new(1, 0, 1, 0)
+RoleText.BackgroundTransparency = 1
+RoleText.Text = Fr and "DEVELOPER" or "MEMBER"
+RoleText.TextColor3 = Color3.new(1, 1, 1)
+RoleText.Font = Enum.Font.GothamBold
+RoleText.TextSize = 9
+RoleText.Parent = Kr
+
+local Or = Instance.new("Frame")
+Or.Size = UDim2.new(1, 0, 0, Y and 108 or 118)
+Or.LayoutOrder = 2
+Or.BackgroundColor3 = Color3.fromRGB(14, 12, 24)
+Or.BorderSizePixel = 0
+Or.Parent = Jr
+Instance.new("UICorner", Or).CornerRadius = UDim.new(0, 12)
+
+local Wr = Instance.new("UIStroke", Or)
+Wr.Color = Color3.fromRGB(90, 40, 180)
+Wr.Thickness = 1.5
+Wr.Transparency = .2
+F.scStroke = Wr
+
+local yr = Instance.new("TextLabel")
+yr.Size = UDim2.new(1, -24, 0, 20)
+yr.Position = UDim2.new(0, 12, 0, 8)
+yr.BackgroundTransparency = 1
+yr.Text = "📊 STATISTIK"
+yr.TextColor3 = Color3.fromRGB(200, 160, 255)
+yr.Font = Enum.Font.GothamBold
+yr.TextSize = Y and 11 or 12
+yr.TextXAlignment = Enum.TextXAlignment.Center
+yr.Parent = Or
+
+local pr = Instance.new("Frame")
+pr.Size = UDim2.new(1, -24, 0, 1)
+pr.Position = UDim2.new(0, 12, 0, 30)
+pr.BackgroundColor3 = Color3.fromRGB(60, 40, 100)
+pr.BorderSizePixel = 0
+pr.Parent = Or
+
+local Pr = Y and 34 or 38
+local Er = {
+    {
+        labelL = "🏆 MENANG",
+        labelR = "💀 KALAH",
+        fnL = function()
+            local c, X = pcall(function() return d.leaderstats.Wins.Value end)
+            return c and tostring(X) or "-"
+        end,
+        fnR = function()
+            local c, X = pcall(function() return d.leaderstats.Losses.Value end)
+            return c and tostring(X) or "-"
+        end,
+        colorL = Color3.fromRGB(255, 200, 60),
+        colorR = Color3.fromRGB(255, 90, 90)
+    },
+    {
+        labelL = "📈 WIN RATE",
+        labelR = "💰 KOIN",
+        fnL = function()
+            local c, X = pcall(function() return d.leaderstats.Wins.Value end)
+            local V, L = pcall(function() return d.leaderstats.Losses.Value end)
+            if not c or not V then return "-" end
+            return math.floor((X / math.max(X + L, 1)) * 100) .. "%"
+        end,
+        fnR = function()
+            local c, X = pcall(function() return d.leaderstats.Money.Value end)
+            if not c then return "-" end
+            local V = tostring(math.floor(X))
+            local L = #V
+            local i = ""
+            for c = 1, L, 1 do
+                i = i .. V:sub(c, c)
+                if (L - c) % 3 == 0 and c ~= L then
+                    i = i .. "."
+                end
+            end
+            return "Rp" .. i
+        end,
+        colorL = Color3.fromRGB(80, 220, 120),
+        colorR = Color3.fromRGB(255, 200, 60)
+    }
+}
+
+local fr = {}
+for c = 1, 2, 1 do
+    local X = 36 + (c - 1) * Pr
+    local V = Er[c]
+    
+    local L = Instance.new("TextLabel")
+    L.Size = UDim2.new(.5, 0, 0, 14)
+    L.Position = UDim2.new(0, 0, 0, X)
+    L.BackgroundTransparency = 1
+    L.Text = V.labelL
+    L.TextColor3 = Color3.fromRGB(140, 125, 175)
+    L.Font = Enum.Font.GothamBold
+    L.TextSize = Y and 8 or 9
+    L.TextXAlignment = Enum.TextXAlignment.Center
+    L.Parent = Or
+    
+    local d = Instance.new("TextLabel")
+    d.Size = UDim2.new(.5, 0, 0, 20)
+    d.Position = UDim2.new(0, 0, 0, X + 15)
+    d.BackgroundTransparency = 1
+    d.Text = V.fnL()
+    d.TextColor3 = V.colorL
+    d.Font = Enum.Font.GothamBold
+    d.TextSize = Y and 15 or 17
+    d.TextXAlignment = Enum.TextXAlignment.Center
+    d.Parent = Or
+    
+    local i = Instance.new("TextLabel")
+    i.Size = UDim2.new(.5, 0, 0, 14)
+    i.Position = UDim2.new(.5, 0, 0, X)
+    i.BackgroundTransparency = 1
+    i.Text = V.labelR
+    i.TextColor3 = Color3.fromRGB(140, 125, 175)
+    i.Font = Enum.Font.GothamBold
+    i.TextSize = Y and 8 or 9
+    i.TextXAlignment = Enum.TextXAlignment.Center
+    i.Parent = Or
+    
+    local j = Instance.new("TextLabel")
+    j.Size = UDim2.new(.5, 0, 0, 20)
+    j.Position = UDim2.new(.5, 0, 0, X + 15)
+    j.BackgroundTransparency = 1
+    j.Text = V.fnR()
+    j.TextColor3 = V.colorR
+    j.Font = Enum.Font.GothamBold
+    j.TextSize = Y and 15 or 17
+    j.TextXAlignment = Enum.TextXAlignment.Center
+    j.Parent = Or
+    
+    table.insert(fr, {vL = d, vR = j, fnL = V.fnL, fnR = V.fnR})
+end
+F.statValRefs = fr
+
+task.spawn(function()
+    while task.wait(3) do
+        if not g then break end
+        pcall(function()
+            for c, X in ipairs(fr) do
+                X.vL.Text = X.fnL()
+                X.vR.Text = X.fnR()
+            end
+        end)
+    end
+end)
+
+local er = Instance.new("Frame")
+er.Size = UDim2.new(1, 0, 0, 0)
+er.AutomaticSize = Enum.AutomaticSize.Y
+er.LayoutOrder = 3
+er.BackgroundColor3 = Color3.fromRGB(14, 12, 24)
+er.BorderSizePixel = 0
+er.Parent = Jr
+Instance.new("UICorner", er).CornerRadius = UDim.new(0, 12)
+
+ncStroke = Instance.new("UIStroke", er)
+ncStroke.Color = Color3.fromRGB(90, 40, 180)
+ncStroke.Thickness = 1.5
+ncStroke.Transparency = .2
+F.ncStroke = ncStroke
+
+ncPad = Instance.new("UIPadding", er)
+ncPad.PaddingLeft = UDim.new(0, 12)
+ncPad.PaddingRight = UDim.new(0, 12)
+ncPad.PaddingTop = UDim.new(0, 10)
+ncPad.PaddingBottom = UDim.new(0, 10)
+
+NoteLayout = Instance.new("UIListLayout")
+NoteLayout.Padding = UDim.new(0, 6)
+NoteLayout.SortOrder = Enum.SortOrder.LayoutOrder
+NoteLayout.Parent = er
+
+NoteTitle = Instance.new("TextLabel")
+NoteTitle.Size = UDim2.new(1, 0, 0, 18)
+NoteTitle.LayoutOrder = 1
+NoteTitle.BackgroundTransparency = 1
+NoteTitle.Text = "Selamat datang di RAFLYXCILLO!"
+NoteTitle.TextColor3 = Color3.fromRGB(200, 160, 255)
+NoteTitle.Font = Enum.Font.GothamBold
+NoteTitle.TextSize = Y and 11 or 12
+NoteTitle.TextXAlignment = Enum.TextXAlignment.Left
+NoteTitle.Parent = er
+
+NoteDivLine = Instance.new("Frame")
+NoteDivLine.Size = UDim2.new(1, 0, 0, 1)
+NoteDivLine.LayoutOrder = 2
+NoteDivLine.BackgroundColor3 = Color3.fromRGB(60, 40, 100)
+NoteDivLine.BorderSizePixel = 0
+NoteDivLine.Parent = er
+
+local Gr = {
+    {order = 3, text = "⚠️  Gunakan semaksimal mungkin,"},
+    {order = 4, text = "     jangan sampai ketahuan admin."},
+    {order = 5, text = "⚠️  Aku ga bertanggung jawab apabila terkena banned."},
+    {order = 6, text = "     Jangan Bar2."},
+    {order = 7, text = "⚠️  Hati-hati kawan."},
+    {order = 8, text = "     SCRIPT INI 100% FREE (UNTUK SAAT INI!)."},
+    {order = 9, text = "Bismillahirrahmanirrahim Al-Fatihah."}
+}
+
+for c, X in ipairs(Gr) do
+    local V = Instance.new("TextLabel")
+    V.Size = UDim2.new(1, 0, 0, X.text == "" and 4 or Y and 15 or 16)
+    V.LayoutOrder = X.order
+    V.BackgroundTransparency = 1
+    V.Text = X.text
+    V.TextColor3 = Color3.fromRGB(170, 155, 200)
+    V.Font = Enum.Font.Gotham
+    V.TextSize = Y and 9 or 10
+    V.TextXAlignment = Enum.TextXAlignment.Left
+    V.TextWrapped = true
+    V.Parent = er
+end
+
+local Tr = Instance.new("Frame")
+Tr.Size = UDim2.new(1, 0, 0, 0)
+Tr.AutomaticSize = Enum.AutomaticSize.Y
+Tr.LayoutOrder = 4
+Tr.BackgroundColor3 = Color3.fromRGB(14, 12, 24)
+Tr.BorderSizePixel = 0
+Tr.Parent = Jr
+Instance.new("UICorner", Tr).CornerRadius = UDim.new(0, 12)
+
+cscStroke = Instance.new("UIStroke", Tr)
+cscStroke.Color = Color3.fromRGB(90, 40, 180)
+cscStroke.Thickness = 1.5
+cscStroke.Transparency = .2
+F.cscStroke = cscStroke
+
+cscPad = Instance.new("UIPadding", Tr)
+cscPad.PaddingLeft = UDim.new(0, 12)
+cscPad.PaddingRight = UDim.new(0, 12)
+cscPad.PaddingTop = UDim.new(0, 10)
+cscPad.PaddingBottom = UDim.new(0, 10)
+
+cscLayout = Instance.new("UIListLayout")
+cscLayout.Padding = UDim.new(0, 5)
+cscLayout.SortOrder = Enum.SortOrder.LayoutOrder
+cscLayout.Parent = Tr
+
+CSTitle = Instance.new("TextLabel")
+CSTitle.Size = UDim2.new(1, 0, 0, 18)
+CSTitle.LayoutOrder = 1
+CSTitle.BackgroundTransparency = 1
+CSTitle.Text = "🔥 NEW UPDATE"
+CSTitle.TextColor3 = Color3.fromRGB(255, 180, 50)
+CSTitle.Font = Enum.Font.GothamBold
+CSTitle.TextSize = Y and 11 or 12
+CSTitle.TextXAlignment = Enum.TextXAlignment.Left
+CSTitle.Parent = Tr
+
+CSDivLine = Instance.new("Frame")
+CSDivLine.Size = UDim2.new(1, 0, 0, 1)
+CSDivLine.LayoutOrder = 2
+CSDivLine.BackgroundColor3 = Color3.fromRGB(80, 60, 20)
+CSDivLine.BorderSizePixel = 0
+CSDivLine.Parent = Tr
+
+local Br = {
+    {order = 3, icon = "👤", text = "INFO — liat profil dan info selanjutnya"},
+    {order = 4, icon = "❤️", text = "NYAWA — deteksi sisa nyawa musuh"},
+    {order = 5, icon = "👻", text = "ANTI ADMIN — auto exit kalo ada admin datang"},
+    {order = 6, icon = "👾", text = "MODE TUYUL — auto mengalah setelah tujuan tercapai"}
+}
+
+for c, X in ipairs(Br) do
+    local V = Instance.new("Frame")
+    V.Size = UDim2.new(1, 0, 0, Y and 20 or 22)
+    V.LayoutOrder = X.order
+    V.BackgroundTransparency = 1
+    V.Parent = Tr
+    
+    local L = Instance.new("TextLabel")
+    L.Size = UDim2.new(0, 20, 1, 0)
+    L.BackgroundTransparency = 1
+    L.Text = X.icon
+    L.Font = Enum.Font.GothamBold
+    L.TextSize = Y and 11 or 12
+    L.TextXAlignment = Enum.TextXAlignment.Center
+    L.Parent = V
+    
+    local d = Instance.new("TextLabel")
+    d.Size = UDim2.new(1, -24, 1, 0)
+    d.Position = UDim2.new(0, 24, 0, 0)
+    d.BackgroundTransparency = 1
+    d.Text = X.text
+    d.TextColor3 = Color3.fromRGB(170, 155, 200)
+    d.Font = Enum.Font.Gotham
+    d.TextSize = Y and 9 or 10
+    d.TextXAlignment = Enum.TextXAlignment.Left
+    d.TextWrapped = true
+    d.Parent = V
+end
+
+local nr = Instance.new("Frame")
+nr.Size = UDim2.new(1, 0, 0, Y and 36 or 40)
+nr.LayoutOrder = 5
+nr.BackgroundColor3 = Color3.fromRGB(14, 12, 24)
+nr.BorderSizePixel = 0
+nr.Parent = Jr
+Instance.new("UICorner", nr).CornerRadius = UDim.new(0, 12)
+
+vcStroke = Instance.new("UIStroke", nr)
+vcStroke.Color = Color3.fromRGB(90, 40, 180)
+vcStroke.Thickness = 1.5
+vcStroke.Transparency = .2
+F.vcStroke = vcStroke
+
+VerLbl = Instance.new("TextLabel")
+VerLbl.Size = UDim2.new(1, -16, 1, 0)
+VerLbl.Position = UDim2.new(0, 12, 0, 0)
+VerLbl.BackgroundTransparency = 1
+VerLbl.Text = "Version: 2.0.2  •  Last update: 11 Mar 2026"
+VerLbl.TextColor3 = Color3.fromRGB(100, 90, 140)
+VerLbl.Font = Enum.Font.Gotham
+VerLbl.TextSize = Y and 9 or 10
+VerLbl.TextXAlignment = Enum.TextXAlignment.Left
+VerLbl.Parent = nr
+
+mr = tr()
+mr.CanvasSize = UDim2.new(0, 0, 0, 0)
+mr.AutomaticCanvasSize = Enum.AutomaticSize.Y
+mr.ScrollBarThickness = Y and 3 or 2
+mr.ScrollBarImageColor3 = Color3.fromRGB(150, 80, 255)
+mr.ScrollBarImageTransparency = 0
+mr.ScrollingDirection = Enum.ScrollingDirection.Y
+
+Zr = tr()
+Zr.ScrollingDirection = Enum.ScrollingDirection.Y
+
+Qr = tr()
+Qr.CanvasSize = UDim2.new(0, 0, 0, 0)
+Qr.AutomaticCanvasSize = Enum.AutomaticSize.Y
+Qr.ScrollBarThickness = Y and 3 or 2
+Qr.ScrollBarImageColor3 = Color3.fromRGB(150, 80, 255)
+Qr.ScrollBarImageTransparency = 0
+Qr.ScrollingDirection = Enum.ScrollingDirection.Y
+F.UtilScrollBar = Qr
+
+qr = Instance.new("UIListLayout")
+qr.Padding = UDim.new(0, 8)
+qr.SortOrder = Enum.SortOrder.LayoutOrder
+qr.Parent = Qr
+
+Rr = tr()
+Rr.CanvasSize = UDim2.new(0, 0, 0, 0)
+Rr.AutomaticCanvasSize = Enum.AutomaticSize.Y
+Rr.ScrollBarThickness = Y and 3 or 2
+Rr.ScrollBarImageColor3 = Color3.fromRGB(150, 80, 255)
+Rr.ScrollBarImageTransparency = 0
+Rr.ScrollingDirection = Enum.ScrollingDirection.Y
+
+rr = Instance.new("UIListLayout")
+rr.Padding = UDim.new(0, 8)
+rr.SortOrder = Enum.SortOrder.LayoutOrder
+rr.Parent = Rr
+
+ar = Instance.new("UIPadding", Rr)
+ar.PaddingLeft = UDim.new(0, 6)
+ar.PaddingRight = UDim.new(0, 6)
+ar.PaddingTop = UDim.new(0, 8)
+ar.PaddingBottom = UDim.new(0, 10)
+
+Cr = tr()
+Cr.CanvasSize = UDim2.new(0, 0, 0, 0)
+Cr.AutomaticCanvasSize = Enum.AutomaticSize.Y
+Cr.ScrollBarThickness = Y and 3 or 2
+Cr.ScrollBarImageColor3 = Color3.fromRGB(255, 80, 80)
+Cr.ScrollBarImageTransparency = 0
+Cr.ScrollingDirection = Enum.ScrollingDirection.Y
+
+local hr = Instance.new("UIPadding", Cr)
+hr.PaddingLeft = UDim.new(0, 6)
+hr.PaddingRight = UDim.new(0, 6)
+hr.PaddingTop = UDim.new(0, 8)
+hr.PaddingBottom = UDim.new(0, 8)
+
+local zr = Instance.new("UIListLayout")
+zr.Padding = UDim.new(0, 6)
+zr.SortOrder = Enum.SortOrder.LayoutOrder
+zr.Parent = Cr
+
+local Ur = Instance.new("Frame")
+Ur.Size = UDim2.new(1, 0, 0, 24)
+Ur.LayoutOrder = 0
+Ur.BackgroundTransparency = 1
+Ur.Parent = Cr
+
+local vr = Instance.new("TextLabel")
+vr.Size = UDim2.new(1, -80, 1, 0)
+vr.BackgroundTransparency = 1
+vr.Text = "❤️ NYAWA PEMAIN 1 MATCH"
+vr.TextColor3 = Color3.fromRGB(255, 100, 100)
+vr.Font = Enum.Font.GothamBold
+vr.TextSize = 10
+vr.TextXAlignment = Enum.TextXAlignment.Left
+vr.Parent = Ur
+
+local Ar = Instance.new("TextButton")
+Ar.Size = UDim2.new(0, 72, 1, 0)
+Ar.Position = UDim2.new(1, -72, 0, 0)
+Ar.BackgroundColor3 = Color3.fromRGB(30, 20, 55)
+Ar.Text = "🔄 REFRESH"
+Ar.TextColor3 = Color3.fromRGB(180, 130, 255)
+Ar.Font = Enum.Font.GothamBold
+Ar.TextSize = 9
+Ar.Parent = Ur
+Instance.new("UICorner", Ar).CornerRadius = UDim.new(0, 7)
+
+local Mr = Instance.new("UIStroke", Ar)
+Mr.Color = Color3.fromRGB(120, 60, 220)
+Mr.Thickness = 1.5
+Mr.Transparency = .2
+
+local Ir = {}
+
+local function Dr(c)
+    local X = Instance.new("Frame")
+    X.Size = UDim2.new(1, 0, 0, Y and 62 or 68)
+    X.LayoutOrder = c
+    X.BackgroundColor3 = Color3.fromRGB(14, 12, 24)
+    X.BorderSizePixel = 0
+    X.Visible = false
+    X.Parent = Cr
+    Instance.new("UICorner", X).CornerRadius = UDim.new(0, 10)
+    Instance.new("UIStroke", X).Color = Color3.fromRGB(80, 20, 20)
+    
+    local V = Instance.new("TextLabel")
+    V.Size = UDim2.new(1, -90, 0, 22)
+    V.Position = UDim2.new(0, 10, 0, 6)
+    V.BackgroundTransparency = 1
+    V.Text = "..."
+    V.TextColor3 = Color3.new(1, 1, 1)
+    V.Font = Enum.Font.GothamBold
+    V.TextSize = Y and 11 or 12
+    V.TextXAlignment = Enum.TextXAlignment.Left
+    V.TextTruncate = Enum.TextTruncate.AtEnd
+    V.Parent = X
+    
+    local L = {}
+    local d = {-140, -116}
+    for c = 1, 2, 1 do
+        local V = Instance.new("TextLabel")
+        V.Size = UDim2.new(0, 20, 0, 20)
+        V.Position = UDim2.new(1, d[c], 0, 8)
+        V.BackgroundTransparency = 1
+        V.Text = "❤️"
+        V.Font = Enum.Font.GothamBold
+        V.TextSize = 16
+        V.TextColor3 = Color3.new(1, 1, 1)
+        V.Parent = X
+        L[c] = V
+    end
+    
+    local i = Instance.new("TextLabel")
+    i.Size = UDim2.new(0, 55, 0, 18)
+    i.Position = UDim2.new(1, -62, 0, 7)
+    i.BackgroundColor3 = Color3.fromRGB(30, 20, 50)
+    i.Text = "HIDUP"
+    i.TextColor3 = Color3.fromRGB(80, 255, 80)
+    i.Font = Enum.Font.GothamBold
+    i.TextSize = 9
+    i.Parent = X
+    Instance.new("UICorner", i).CornerRadius = UDim.new(1, 0)
+    
+    local j = Instance.new("Frame")
+    j.Size = UDim2.new(1, -20, 0, 1)
+    j.Position = UDim2.new(0, 10, 0, 32)
+    j.BackgroundColor3 = Color3.fromRGB(50, 40, 80)
+    j.BorderSizePixel = 0
+    j.Parent = X
+    
+    local g = Instance.new("Frame")
+    g.Size = UDim2.new(1, 0, 0, 24)
+    g.Position = UDim2.new(0, 0, 0, 36)
+    g.BackgroundTransparency = 1
+    g.Parent = X
+    
+    local w = Instance.new("UIListLayout")
+    w.FillDirection = Enum.FillDirection.Horizontal
+    w.Padding = UDim.new(0, 0)
+    w.SortOrder = Enum.SortOrder.LayoutOrder
+    w.VerticalAlignment = Enum.VerticalAlignment.Center
+    w.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    w.Parent = g
+    
+    local function x(c, X, V)
+        local L = Instance.new("TextLabel")
+        L.Size = UDim2.new(.25, 0, 1, 0)
+        L.BackgroundTransparency = 1
+        L.Text = c .. " —"
+        L.TextColor3 = X
+        L.Font = Enum.Font.GothamBold
+        L.TextSize = Y and 9 or 10
+        L.TextXAlignment = Enum.TextXAlignment.Center
+        L.LayoutOrder = V
+        L.Parent = g
+        return L
+    end
+    
+    local t = x("🏆", Color3.fromRGB(255, 210, 60), 1)
+    local J = x("💀", Color3.fromRGB(255, 80, 80), 2)
+    local m = x("📈", Color3.fromRGB(80, 220, 120), 3)
+    local Z = x("💰", Color3.fromRGB(120, 190, 255), 4)
+    
+    return {frame = X, nameLbl = V, hearts = L, badge = i, winsLbl = t, lossesLbl = J, rateLbl = m, moneyLbl = Z}
+end
+
+for c = 1, 8, 1 do
+    Ir[c] = Dr(c)
+end
+
+local kr = Instance.new("TextLabel")
+kr.Size = UDim2.new(1, 0, 0, 40)
+kr.LayoutOrder = 9
+kr.BackgroundTransparency = 1
+kr.Text = "⚠️ Belum ada match aktif"
+kr.TextColor3 = Color3.fromRGB(100, 90, 130)
+kr.Font = Enum.Font.Gotham
+kr.TextSize = 10
+kr.TextWrapped = true
+kr.Parent = Cr
+
+local ur = {}
+local ci = false
+
+local function Xi()
+    local X = d:GetAttribute("CurrentTable")
+    ur = {}
+    for c, V in pairs(c:GetPlayers()) do
+        if V ~= d then
+            local c = false
+            if X then
+                local L, d = pcall(function() return V:GetAttribute("CurrentTable") end)
+                if L and (d and d == X) then
+                    c = true
+                end
+            end
+            if not c and not X then
+                local X, L = pcall(function() return V:GetAttribute("Lives") end)
+                if X and typeof(L) == "number" then
+                    c = true
+                end
+            end
+            if c then
+                local c, X = pcall(function() return V:GetAttribute("Lives") end)
+                local L, d, i, j = nil, nil, nil, nil
+                local g = V:FindFirstChild("leaderstats")
+                if g then
+                    local c = g:FindFirstChild("Wins")
+                    local X = g:FindFirstChild("Losses")
+                    local V = g:FindFirstChild("Money")
+                    if c and X then
+                        L = c.Value
+                        d = X.Value
+                        local V = L + d
+                        i = V > 0 and math.floor((L / V) * 100) or 0
+                    end
+                    if V then
+                        j = V.Value
+                    end
+                end
+                table.insert(ur, {player = V, nama = V.Name, lives = c and X or nil, dead = false, wins = L, losses = d, winrate = i, money = j})
+            end
+        end
+    end
+    print("[RAFLYXCILLO] Nyawa: Snapshot " .. (#ur .. " musuh"))
+end
+
+local function Vi()
+    local c = d:GetAttribute("CurrentTable")
+    if c and not ci then
+        Xi()
+        ci = true
+    end
+    if not c and ci then
+        ci = false
+        ur = {}
+    end
+    if c and #ur > 0 then
+        for X, V in ipairs(ur) do
+            if not V.dead then
+                local X, L = pcall(function() return V.player:GetAttribute("CurrentTable") end)
+                if not X or L ~= c then
+                    V.dead = true
+                else
+                    local c, X = pcall(function() return V.player:GetAttribute("Lives") end)
+                    if c and typeof(X) == "number" then
+                        V.lives = X
+                        if X <= 0 then
+                            V.dead = true
+                        end
+                    end
+                end
+                local d, i = pcall(function() return V.player.Name end)
+                if d then
+                    V.nama = i
+                end
+                local j = V.player:FindFirstChild("leaderstats")
+                if j then
+                    local c = j:FindFirstChild("Wins")
+                    local X = j:FindFirstChild("Losses")
+                    local L = j:FindFirstChild("Money")
+                    if c and X then
+                        V.wins = c.Value
+                        V.losses = X.Value
+                        local L = V.wins + V.losses
+                        V.winrate = L > 0 and math.floor((V.wins / L) * 100) or 0
+                    end
+                    if L then
+                        V.money = L.Value
+                    end
+                end
+            end
+        end
+    end
+    
+    for c = 1, 8, 1 do
+        Ir[c].frame.Visible = false
+    end
+    
+    if #ur == 0 then
+        kr.Text = c and "🔄 Mendeteksi musuh... (coba REFRESH)" or "⚠️ Kamu belum di match"
+        kr.Visible = true
+        return
+    end
+    
+    kr.Visible = false
+    for c, X in ipairs(ur) do
+        if c > 8 then break end
+        local V = Ir[c]
+        V.frame.Visible = true
+        V.nameLbl.Text = X.nama
+        local L = X.wins ~= nil and tostring(X.wins) or "?"
+        local d = X.losses ~= nil and tostring(X.losses) or "?"
+        local i = X.winrate ~= nil and tostring(X.winrate) .. "%" or "?"
+        local j = X.money ~= nil and "Rp" .. tostring(X.money) or "?"
+        
+        V.winsLbl.Text = "🏆 " .. L
+        V.lossesLbl.Text = "💀 " .. d
+        V.rateLbl.Text = "📈 " .. i
+        V.moneyLbl.Text = "💰 " .. j
+        
+        local g = V.frame:FindFirstChildOfClass("UIStroke")
+        if X.dead then
+            V.hearts[1].Text = "🖤"
+            V.hearts[2].Text = "🖤"
+            V.badge.Text = "MATI"
+            V.badge.TextColor3 = Color3.fromRGB(255, 60, 60)
+            if g then g.Color = Color3.fromRGB(150, 20, 20) end
+        elseif typeof(X.lives) ~= "number" then
+            V.hearts[1].Text = "❤️"
+            V.hearts[2].Text = "❤️"
+            V.badge.Text = "SIAP"
+            V.badge.TextColor3 = Color3.fromRGB(150, 150, 150)
+            if g then g.Color = Color3.fromRGB(60, 60, 80) end
+        elseif X.lives >= 2 then
+            V.hearts[1].Text = "❤️"
+            V.hearts[2].Text = "❤️"
+            V.badge.Text = "FULL"
+            V.badge.TextColor3 = Color3.fromRGB(80, 255, 80)
+            if g then g.Color = Color3.fromRGB(20, 100, 20) end
+        elseif X.lives == 1 then
+            V.hearts[1].Text = "❤️"
+            V.hearts[2].Text = "🖤"
+            V.badge.Text = "1 NYAWA"
+            V.badge.TextColor3 = Color3.fromRGB(255, 200, 0)
+            if g then g.Color = Color3.fromRGB(150, 100, 0) end
+        else
+            V.hearts[1].Text = "🖤"
+            V.hearts[2].Text = "🖤"
+            V.badge.Text = "MATI"
+            V.badge.TextColor3 = Color3.fromRGB(255, 60, 60)
+            if g then g.Color = Color3.fromRGB(150, 20, 20) end
+            X.dead = true
+        end
+    end
+end
+
+Ar.MouseButton1Click:Connect(function()
+    local c = d:GetAttribute("CurrentTable")
+    if not c then
+        Ar.Text = "❌ Belum di match"
+        Ar.TextColor3 = Color3.fromRGB(255, 80, 80)
+        task.delay(1.5, function()
+            Ar.Text = "🔄 REFRESH"
+            Ar.TextColor3 = Color3.fromRGB(180, 130, 255)
+        end)
+        return
+    end
+    a()
+    Ar.Text = "⏳ ..."
+    Ar.TextColor3 = Color3.fromRGB(255, 200, 50)
+    ur = {}
+    ci = false
+    task.spawn(function()
+        task.wait(.3)
+        ci = true
+        pcall(Xi)
+        pcall(Vi)
+        task.wait(.5)
+        Ar.Text = "🔄 REFRESH"
+        Ar.TextColor3 = Color3.fromRGB(180, 130, 255)
+    end)
+end)
+
+task.spawn(function()
+    while task.wait(1) do
+        if not g then break end
+        pcall(Vi)
+    end
+end)
+
+d:GetAttributeChangedSignal("CurrentTable"):Connect(function()
+    local c = d:GetAttribute("CurrentTable")
+    if c then
+        task.delay(2, function()
+            pcall(Xi)
+            pcall(Vi)
+        end)
+        task.delay(5, function()
+            if #ur == 0 then
+                pcall(Xi)
+                pcall(Vi)
+                print("[RAFLYXCILLO] Nyawa: Second attempt snapshot")
+            end
+        end)
+    else
+        ci = false
+        ur = {}
+        pcall(Vi)
+    end
+end)
+
+c.PlayerAdded:Connect(function(c)
+    c:GetAttributeChangedSignal("Lives"):Connect(function()
+        pcall(Vi)
+    end)
+end)
+
+for c, X in pairs(c:GetPlayers()) do
+    if X ~= d then
+        X:GetAttributeChangedSignal("Lives"):Connect(function()
+            pcall(Vi)
+        end)
+    end
+end
+
+task.spawn(function()
+    task.wait(3)
+    local c = d:GetAttribute("CurrentTable")
+    if c and not ci then
+        ci = true
+        pcall(Xi)
+        pcall(Vi)
+        print("[RAFLYXCILLO] Nyawa: Detected in match on load!")
+    end
+    task.wait(3)
+    if ci and #ur == 0 then
+        pcall(Xi)
+        pcall(Vi)
+    end
+end)
+
+local function Li(c)
+    local X = {Jr, mr, Zr, Qr, Rr, Cr}
+    for c, X in pairs(X) do
+        if X then
+            X.Visible = false
+        end
+    end
+    if c then
+        c.Visible = true
+    end
+end
+
+Li(mr)
+I(k)
+
+D.MouseButton1Click:Connect(function()
+    Li(Jr)
+    I(D)
+    a()
+end)
+
+Vr.MouseButton1Click:Connect(function()
+    Li(Cr)
+    I(Vr)
+    a()
+end)
+
+k.MouseButton1Click:Connect(function()
+    Li(mr)
+    I(k)
+    a()
+end)
+
+u.MouseButton1Click:Connect(function()
+    Li(Zr)
+    I(u)
+    a()
+end)
+
+cr.MouseButton1Click:Connect(function()
+    Li(Qr)
+    I(cr)
+    a()
+end)
+
+Xr.MouseButton1Click:Connect(function()
+    Li(Rr)
+    I(Xr)
+    a()
+end)
+
+local di, ii
+local ji = false
+local gi = true
+local Yi = .03
+local wi = .08
+local xi = .15
+local ti = .5
+local Ji = .02
+local mi = .06
+local Zi = 1
+local Qi = 2.5
+local qi = false
+local Ri = false
+local ri = 3
+local ai = 0
+local Ci = false
+local li = 0
+local Si = 2
+local bi = false
+local si = ""
+local Ni = ""
+
+local Hi = {
+    "wkwk", "receh", "noob", "lemah", "kasian", "santuy", "ezz", "wkwk", "lol", "mudah"
+}
+
+local Fi = {
+    IF = {}, X = {}, NG = {}, AI = {}, KS = {}, CY = {}, UI = {}, LY = {}, GY = {}, LT = {}, EO = {}, OE = {}, EKS = {}, OO = {}, KN = {}, Q = {}, MP = {}, SF = {}, TT = {}, ["SEMUA KATA SULIT"] = {}
+}
+
+local Ki = {
+    IF = false, X = false, NG = false, AI = false, KS = false, CY = false, UI = false, LY = false, GY = false, LT = false, EO = false, OE = false, EKS = false, OO = false, KN = false, Q = false, MP = false, SF = false, TT = false, ["SEMUA KATA SULIT"] = false
+}
+
+MainLayout = Instance.new("UIListLayout")
+MainLayout.Padding = UDim.new(0, Y and 5 or 7)
+MainLayout.SortOrder = Enum.SortOrder.LayoutOrder
+MainLayout.Parent = mr
+
+MainPad = Instance.new("UIPadding", mr)
+MainPad.PaddingLeft = UDim.new(0, 5)
+MainPad.PaddingRight = UDim.new(0, 5)
+MainPad.PaddingTop = UDim.new(0, 5)
+MainPad.PaddingBottom = UDim.new(0, 10)
+
+local function Oi(c, X)
+    local L = Y and 48 or 42
+    local d = (28 + 4 * L) + 6
+    local i = Instance.new("Frame")
+    i.Size = UDim2.new(1, -4, 0, d)
+    i.LayoutOrder = X
+    i.BackgroundColor3 = Color3.fromRGB(12, 11, 20)
+    i.BorderSizePixel = 0
+    i.Parent = c
+    Instance.new("UICorner", i).CornerRadius = UDim.new(0, 11)
+    
+    local j = Instance.new("UIStroke", i)
+    j.Color = Color3.fromRGB(60, 30, 110)
+    j.Thickness = 1
+    j.Transparency = .3
+    
+    local g = Instance.new("Frame")
+    g.Size = UDim2.new(1, 0, 0, 26)
+    g.BackgroundColor3 = Color3.fromRGB(20, 16, 36)
+    g.BorderSizePixel = 0
+    g.Parent = i
+    Instance.new("UICorner", g).CornerRadius = UDim.new(0, 11)
+    
+    local w = Instance.new("Frame")
+    w.Size = UDim2.new(1, 0, .5, 0)
+    w.Position = UDim2.new(0, 0, .5, 0)
+    w.BackgroundColor3 = Color3.fromRGB(20, 16, 36)
+    w.BorderSizePixel = 0
+    w.Parent = g
+    
+    local x = Instance.new("TextLabel")
+    x.Size = UDim2.new(1, -12, 1, 0)
+    x.Position = UDim2.new(0, 12, 0, 0)
+    x.BackgroundTransparency = 1
+    x.Text = "⚡  SPEED SETTINGS"
+    x.TextColor3 = Color3.fromRGB(180, 140, 255)
+    x.Font = Enum.Font.GothamBold
+    x.TextSize = 10
+    x.TextXAlignment = Enum.TextXAlignment.Left
+    x.Parent = g
+    
+    local t = {
+        {icon = "⌨", label = "NULIS", minV = .01, maxV = 1, defMin = .19, defMax = .37, dec = 2, suf = "s", cbMin = function(c) Yi = c end, cbMax = function(c) wi = c end},
+        {icon = "⏱", label = "DELAY GILIRAN", minV = .1, maxV = 5, defMin = 1.5, defMax = 2.5, dec = 1, suf = "s", cbMin = function(c) Zi = c end, cbMax = function(c) Qi = c end},
+        {icon = "⏎", label = "ENTER", minV = .01, maxV = 3, defMin = .2, defMax = .5, dec = 2, suf = "s", cbMin = function(c) xi = c end, cbMax = function(c) ti = c end},
+        {icon = "🗑", label = "DELETE", minV = .01, maxV = 1, defMin = .2, defMax = .3, dec = 2, suf = "s", cbMin = function(c) Ji = c end, cbMax = function(c) mi = c end}
+    }
+    
+    for c, X in ipairs(t) do
+        X.cbMin(X.defMin)
+        X.cbMax(X.defMax)
+    end
+    
+    local J = Y and 16 or 11
+    local m = Y and 20 or 12
+    for c, X in ipairs(t) do
+        local d = 28 + (c - 1) * L
+        local j = Instance.new("Frame")
+        j.Size = UDim2.new(1, -10, 0, L - 4)
+        j.Position = UDim2.new(0, 5, 0, d)
+        j.BackgroundColor3 = c % 2 == 0 and Color3.fromRGB(16, 14, 26) or Color3.fromRGB(13, 12, 22)
+        j.BorderSizePixel = 0
+        j.Parent = i
+        Instance.new("UICorner", j).CornerRadius = UDim.new(0, 7)
+        
+        local g = Instance.new("TextLabel")
+        g.Size = UDim2.new(0, 80, 0, 14)
+        g.Position = UDim2.new(0, 8, 0, 4)
+        g.BackgroundTransparency = 1
+        g.Text = X.icon .. (" " .. X.label)
+        g.TextColor3 = Color3.fromRGB(170, 155, 210)
+        g.Font = Enum.Font.GothamBold
+        g.TextSize = Y and 8 or 9
+        g.TextXAlignment = Enum.TextXAlignment.Left
+        g.Parent = j
+        
+        local w = "%." .. (X.dec .. "f")
+        local x = Instance.new("TextLabel")
+        x.Size = UDim2.new(0, 90, 0, 14)
+        x.Position = UDim2.new(1, -94, 0, 4)
+        x.BackgroundTransparency = 1
+        x.Font = Enum.Font.GothamBold
+        x.TextSize = Y and 8 or 9
+        x.TextXAlignment = Enum.TextXAlignment.Right
+        x.Parent = j
+        
+        local t, Z = X.defMin, X.defMax
+        local function Q()
+            x.Text = string.format(w, t) .. (" ~ " .. (string.format(w, Z) .. X.suf))
+            local c = N[H]
+            x.TextColor3 = c and c.logText or Color3.fromRGB(150, 100, 255)
+        end
+        Q()
+        
+        local q = Y and 32 or 26
+        local R = Y and 6 or 4
+        local r = Instance.new("Frame")
+        r.Size = UDim2.new(1, -16, 0, R)
+        r.Position = UDim2.new(0, 8, 0, q)
+        r.BackgroundColor3 = Color3.fromRGB(30, 25, 50)
+        r.BorderSizePixel = 0
+        r.Parent = j
+        Instance.new("UICorner", r).CornerRadius = UDim.new(1, 0)
+        
+        local a = Instance.new("Frame")
+        a.BackgroundColor3 = Color3.fromRGB(120, 60, 220)
+        a.BorderSizePixel = 0
+        a.Parent = r
+        Instance.new("UICorner", a).CornerRadius = UDim.new(1, 0)
+        
+        local C = Instance.new("Frame")
+        C.Size = UDim2.new(0, J, 0, J)
+        C.BackgroundColor3 = Color3.new(1, 1, 1)
+        C.BorderSizePixel = 0
+        C.ZIndex = 3
+        C.Parent = r
+        Instance.new("UICorner", C).CornerRadius = UDim.new(1, 0)
+        
+        local l = Instance.new("UIStroke", C)
+        l.Color = Color3.fromRGB(150, 80, 255)
+        l.Thickness = 1.5
+        
+        local S = Instance.new("Frame")
+        S.Size = UDim2.new(0, J, 0, J)
+        S.BackgroundColor3 = Color3.fromRGB(180, 120, 255)
+        S.BorderSizePixel = 0
+        S.ZIndex = 3
+        S.Parent = r
+        Instance.new("UICorner", S).CornerRadius = UDim.new(1, 0)
+        
+        local b = Instance.new("UIStroke", S)
+        b.Color = Color3.fromRGB(200, 150, 255)
+        b.Thickness = 1.5
+        
+        local function s(c)
+            local V = 10 ^ X.dec
+            return math.floor(c * V + .5) / V
+        end
+        
+        local K = J / 2
+        local function O()
+            local c = (t - X.minV) / (X.maxV - X.minV)
+            local V = (Z - X.minV) / (X.maxV - X.minV)
+            a.Position = UDim2.new(c, 0, 0, 0)
+            a.Size = UDim2.new(V - c, 0, 1, 0)
+            C.Position = UDim2.new(c, -K, .5, -K)
+            S.Position = UDim2.new(V, -K, .5, -K)
+            Q()
+        end
+        O()
+        
+        local W = Instance.new("TextButton")
+        W.Size = UDim2.new(1, 0, 0, m * 2)
+        W.Position = UDim2.new(0, 0, .5, -m)
+        W.BackgroundTransparency = 1
+        W.Text = ""
+        W.ZIndex = 4
+        W.Parent = r
+        
+        local y, p = false, false
+        local function P(c)
+            local X = r.AbsolutePosition.X
+            local V = r.AbsoluteSize.X
+            return math.clamp((c - X) / V, 0, 1)
+        end
+        local function E(c)
+            return s(X.minV + c * (X.maxV - X.minV))
+        end
+        
+        W.InputBegan:Connect(function(c)
+            if c.UserInputType ~= Enum.UserInputType.MouseButton1 and c.UserInputType ~= Enum.UserInputType.Touch then return end
+            local X = E(P(c.Position.X))
+            if math.abs(X - t) <= math.abs(X - Z) then
+                y = true
+            else
+                p = true
+            end
+        end)
+        
+        V.InputChanged:Connect(function(c)
+            if c.UserInputType ~= Enum.UserInputType.MouseMovement and c.UserInputType ~= Enum.UserInputType.Touch then return end
+            if not (y or p) then return end
+            local V = E(P(c.Position.X))
+            local L = 1 / 10 ^ X.dec
+            if y then
+                t = math.clamp(V, X.minV, Z - L)
+                X.cbMin(t)
+            else
+                Z = math.clamp(V, t + L, X.maxV)
+                X.cbMax(Z)
+            end
+            O()
+        end)
+        
+        V.InputEnded:Connect(function(c)
+            if c.UserInputType == Enum.UserInputType.MouseButton1 or c.UserInputType == Enum.UserInputType.Touch then
+                y = false
+                p = false
+            end
+        end)
+        table.insert(F, {fill = a, knobMinStroke = l, knobMaxStroke = b, valLbl = x, knobMax = S})
+    end
+    return i
+end
+
+local function Wi(c, X, V, L, d)
+    local i = Instance.new("Frame")
+    i.Size = UDim2.new(1, -4, 0, Z)
+    i.LayoutOrder = d
+    i.BackgroundColor3 = Color3.fromRGB(16, 15, 24)
+    i.BorderSizePixel = 0
+    i.Parent = X
+    Instance.new("UICorner", i).CornerRadius = UDim.new(0, 9)
+    
+    local j = Instance.new("UIStroke", i)
+    j.Color = Color3.fromRGB(55, 30, 100)
+    j.Thickness = 1
+    j.Transparency = .4
+    
+    local g = Instance.new("TextLabel")
+    g.Size = UDim2.new(1, -60, 1, 0)
+    g.Position = UDim2.new(0, 10, 0, 0)
+    g.BackgroundTransparency = 1
+    g.Text = c
+    g.TextColor3 = Color3.fromRGB(210, 200, 230)
+    g.Font = Enum.Font.GothamBold
+    g.TextSize = Q
+    g.TextXAlignment = Enum.TextXAlignment.Left
+    g.Parent = i
+    
+    local w = Y and 48 or 44
+    local x = Y and 26 or 22
+    local t = Instance.new("Frame")
+    t.Size = UDim2.new(0, w, 0, x)
+    t.Position = UDim2.new(1, -(w + 6), .5, -x / 2)
+    t.BackgroundColor3 = V and Color3.fromRGB(30, 180, 110) or Color3.fromRGB(180, 40, 50)
+    t.BorderSizePixel = 0
+    t.Parent = i
+    Instance.new("UICorner", t).CornerRadius = UDim.new(1, 0)
+    
+    local J = Y and 20 or 16
+    local m = Instance.new("Frame")
+    m.Size = UDim2.new(0, J, 0, J)
+    m.Position = V and UDim2.new(1, -(J + 3), .5, -J / 2) or UDim2.new(0, 3, .5, -J / 2)
+    m.BackgroundColor3 = Color3.new(1, 1, 1)
+    m.BorderSizePixel = 0
+    m.Parent = t
+    Instance.new("UICorner", m).CornerRadius = UDim.new(1, 0)
+    
+    local q = Instance.new("TextButton")
+    q.Size = UDim2.new(1, 0, 1, 0)
+    q.BackgroundTransparency = 1
+    q.Text = ""
+    q.Parent = i
+    
+    local R = V
+    q.MouseButton1Click:Connect(function()
+        R = not R
+        t.BackgroundColor3 = R and Color3.fromRGB(30, 180, 110) or Color3.fromRGB(180, 40, 50)
+        m.Position = R and UDim2.new(1, -(J + 3), .5, -J / 2) or UDim2.new(0, 3, .5, -J / 2)
+        a()
+        L(R)
+    end)
+    return i
+end
+
+local yi
+Wi("AUTO TULIS", mr, false, function(c)
+    ji = c
+    if ji then
+        task.wait(.3)
+        yi()
+    end
+end, 1)
+
+Wi("AUTO REJOIN", mr, true, function(c) gi = c end, 3)
+Oi(mr, 31)
+
+Wi("🧠 MANUSIA [FIX]", mr, false, function(c) qi = c end, 32)
+Wi("💀 BLATANT MODE", mr, false, function(c)
+    bi = c
+    if not c then
+        si = ""
+        Ni = ""
+    end
+end, 33)
+
+local pi = Instance.new("Frame")
+pi.Size = UDim2.new(1, -4, 0, 0)
+pi.AutomaticSize = Enum.AutomaticSize.Y
+pi.LayoutOrder = 34
+pi.BackgroundColor3 = Color3.fromRGB(60, 10, 10)
+pi.BorderSizePixel = 0
+pi.Parent = mr
+Instance.new("UICorner", pi).CornerRadius = UDim.new(0, 8)
+Instance.new("UIStroke", pi).Color = Color3.fromRGB(180, 40, 40)
+
+local Pi = Instance.new("UIPadding", pi)
+Pi.PaddingLeft = UDim.new(0, 10)
+Pi.PaddingRight = UDim.new(0, 10)
+Pi.PaddingTop = UDim.new(0, 8)
+Pi.PaddingBottom = UDim.new(0, 8)
+
+local Ei = Instance.new("UIListLayout", pi)
+Ei.Padding = UDim.new(0, 4)
+Ei.SortOrder = Enum.SortOrder.LayoutOrder
+
+local fi = Instance.new("TextLabel")
+fi.Size = UDim2.new(1, 0, 0, 0)
+fi.AutomaticSize = Enum.AutomaticSize.Y
+fi.LayoutOrder = 1
+fi.BackgroundTransparency = 1
+fi.Text = "⚠️  WAJIB MATIKAN AUTO TULIS"
+fi.TextColor3 = Color3.fromRGB(255, 80, 80)
+fi.Font = Enum.Font.GothamBold
+fi.TextSize = Y and 9 or 10
+fi.TextXAlignment = Enum.TextXAlignment.Left
+fi.TextWrapped = true
+fi.Parent = pi
+
+local oi = Instance.new("TextLabel")
+oi.Size = UDim2.new(1, 0, 0, 0)
+oi.AutomaticSize = Enum.AutomaticSize.Y
+oi.LayoutOrder = 2
+oi.BackgroundTransparency = 1
+oi.Text = "⚠️  Hati-hati! Fitur ini gampang kena banned."
+oi.TextColor3 = Color3.fromRGB(255, 140, 50)
+oi.Font = Enum.Font.GothamBold
+oi.TextSize = Y and 9 or 10
+oi.TextXAlignment = Enum.TextXAlignment.Left
+oi.TextWrapped = true
+oi.Parent = pi
+
+local ei = Instance.new("TextLabel")
+ei.Size = UDim2.new(1, 0, 0, 0)
+ei.AutomaticSize = Enum.AutomaticSize.Y
+ei.LayoutOrder = 3
+ei.BackgroundTransparency = 1
+ei.Text = "💡  Tulis apa aja, tekan Enter — kata valid dikirim otomatis."
+ei.TextColor3 = Color3.fromRGB(160, 200, 160)
+ei.Font = Enum.Font.Gotham
+ei.TextSize = Y and 9 or 10
+ei.TextXAlignment = Enum.TextXAlignment.Left
+ei.TextWrapped = true
+ei.Parent = pi
+
+local Gi = Instance.new("TextButton")
+Gi.Size = UDim2.new(1, -4, 0, Z)
+Gi.LayoutOrder = 4
+Gi.BackgroundColor3 = Color3.fromRGB(65, 20, 145)
+Gi.Text = "⚙  SET KATA SULIT ▼"
+Gi.TextColor3 = Color3.new(1, 1, 1)
+Gi.Font = Enum.Font.GothamBold
+Gi.TextSize = Q
+Gi.Parent = mr
+Instance.new("UICorner", Gi).CornerRadius = UDim.new(0, 9)
+
+dropBtnGrad = Instance.new("UIGradient", Gi)
+dropBtnGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(90, 30, 190)), ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 15, 120))})
+
+local Ti = Instance.new("Frame")
+Ti.Size = UDim2.new(1, -4, 0, 0)
+Ti.BackgroundColor3 = Color3.fromRGB(14, 13, 22)
+Ti.ClipsDescendants = true
+Ti.BorderSizePixel = 0
+Ti.Parent = mr
+Ti.LayoutOrder = 5
+
+dropStroke = Instance.new("UIStroke", Ti)
+dropStroke.Color = Color3.fromRGB(80, 35, 160)
+dropStroke.Thickness = 1
+dropStroke.Transparency = .3
+
+local Bi = Y and 37 or 33
+local function ni()
+    for c, X in pairs(Ti:GetChildren()) do
+        if X:IsA("TextButton") then
+            X:Destroy()
+        end
+    end
+    local c = {"IF", "X", "NG", "AI", "KS", "CY", "UI", "LY", "GY", "LT", "EO", "OE", "EKS", "OO", "KN", "Q", "MP", "SF", "TT", "SEMUA KATA SULIT"}
+    for c, X in ipairs(c) do
+        local V = Instance.new("TextButton")
+        V.Size = UDim2.new(1, -12, 0, Y and 32 or 28)
+        V.Position = UDim2.new(0, 6, 0, (c - 1) * Bi + 5)
+        local L = Ki["SEMUA KATA SULIT"] and X ~= "SEMUA KATA SULIT"
+        local d = Ki[X]
+        V.BackgroundColor3 = L and Color3.fromRGB(25, 22, 36) or d and Color3.fromRGB(80, 30, 170) or Color3.fromRGB(28, 25, 42)
+        V.Text = (d and "✔  " or "   ") .. (X .. (d and "  [ON]" or ""))
+        V.TextColor3 = L and Color3.fromRGB(70, 65, 90) or d and Color3.new(1, 1, 1) or Color3.fromRGB(160, 150, 190)
+        V.Font = Enum.Font.GothamBold
+        V.TextSize = Q
+        V.TextXAlignment = Enum.TextXAlignment.Left
+        V.Parent = Ti
+        Instance.new("UICorner", V).CornerRadius = UDim.new(0, 7)
+        
+        local i = Instance.new("UIPadding", V)
+        i.PaddingLeft = UDim.new(0, 8)
+        
+        if d then
+            local c = Instance.new("UIStroke", V)
+            c.Color = Color3.fromRGB(130, 70, 220)
+            c.Thickness = 1
+            c.Transparency = .2
+        end
+        
+        local j = Instance.new("TextLabel")
+        j.Size = UDim2.new(0, 60, 1, 0)
+        j.Position = UDim2.new(1, -64, 0, 0)
+        j.BackgroundTransparency = 1
+        local g = #(Fi[X] or {})
+        j.Text = g > 0 and g .. " kata" or "loading..."
+        j.TextColor3 = L and Color3.fromRGB(60, 55, 80) or Color3.fromRGB(120, 100, 180)
+        j.Font = Enum.Font.Gotham
+        j.TextSize = Y and 8 or 9
+        j.TextXAlignment = Enum.TextXAlignment.Right
+        j.ZIndex = V.ZIndex + 1
+        j.Parent = V
+        
+        V.MouseButton1Click:Connect(function()
+            if L then return end
+            a()
+            if X == "SEMUA KATA SULIT" then
+                Ki["SEMUA KATA SULIT"] = not Ki["SEMUA KATA SULIT"]
+                if Ki["SEMUA KATA SULIT"] then
+                    Ki.IF = false
+                    Ki.X = false
+                    Ki.NG = false
+                    Ki.AI = false
+                    Ki.KS = false
+                    Ki.CY = false
+                    Ki.UI = false
+                    Ki.LY = false
+                    Ki.GY = false
+                    Ki.LT = false
+                    Ki.EO = false
+                    Ki.OE = false
+                    Ki.EKS = false
+                    Ki.OO = false
+                    Ki.KN = false
+                    Ki.Q = false
+                    Ki.MP = false
+                    Ki.SF = false
+                    Ki.TT = false
+                end
+            else
+                Ki[X] = not Ki[X]
+            end
+            ni()
+        end)
+    end
+end
+
+F.DropMainBtn = Gi
+F.dropBtnGrad = dropBtnGrad
+F.dropStroke = dropStroke
+F.ScrollBar = mr
+F.themeBtnStroke = themeBtnStroke
+F.themeDFStroke = themeDFStroke
+
+local hi = false
+Gi.MouseButton1Click:Connect(function()
+    a()
+    hi = not hi
+    Gi.Text = hi and "⚙  SET KATA SULIT ▲" or "⚙  SET KATA SULIT ▼"
+    Ti:TweenSize(UDim2.new(1, -4, 0, hi and 20 * Bi + 10 or 0), "Out", "Quart", .3, true)
+    ni()
+end)
+
+local zi = Instance.new("Frame")
+zi.Size = UDim2.new(1, -4, 0, Y and 55 or 50)
+zi.LayoutOrder = 10
+zi.BackgroundColor3 = Color3.fromRGB(12, 10, 20)
+zi.BorderSizePixel = 0
+zi.Parent = mr
+Instance.new("UICorner", zi).CornerRadius = UDim.new(0, 9)
+
+logStroke = Instance.new("UIStroke", zi)
+logStroke.Color = Color3.fromRGB(80, 40, 140)
+logStroke.Thickness = 1
+logStroke.Transparency = .4
+F.logStroke = logStroke
+
+di = Instance.new("TextLabel")
+di.Size = UDim2.new(1, -12, 0, 22)
+di.Position = UDim2.new(0, 8, 0, 4)
+di.BackgroundTransparency = 1
+di.Text = "AWALAN: -"
+di.TextColor3 = Color3.fromRGB(160, 100, 255)
+di.Font = Enum.Font.GothamBold
+di.TextSize = Y and 10 or 11
+di.TextXAlignment = Enum.TextXAlignment.Left
+di.Parent = zi
+F.LogAwalan = di
+
+ii = Instance.new("TextLabel")
+ii.Size = UDim2.new(1, -12, 0, 24)
+ii.Position = UDim2.new(0, 8, 0, 26)
+ii.BackgroundTransparency = 1
+ii.Text = "-"
+ii.TextColor3 = Color3.fromRGB(230, 230, 255)
+ii.Font = Enum.Font.GothamBold
+ii.TextSize = Y and 14 or 16
+ii.TextXAlignment = Enum.TextXAlignment.Left
+ii.Parent = zi
+
+local Ui, vi, Ai, Mi, Ii
+FakePad = Instance.new("UIPadding", Zr)
+FakePad.PaddingLeft = UDim.new(0, 6)
+FakePad.PaddingRight = UDim.new(0, 6)
+FakePad.PaddingTop = UDim.new(0, 8)
+
+FakeLabel = Instance.new("TextLabel")
+FakeLabel.Size = UDim2.new(1, 0, 0, 18)
+FakeLabel.Position = UDim2.new(0, 0, 0, 0)
+FakeLabel.BackgroundTransparency = 1
+FakeLabel.Text = "🎭 GANTI NAMA TAMPILAN"
+FakeLabel.TextColor3 = Color3.fromRGB(120, 80, 200)
+FakeLabel.Font = Enum.Font.GothamBold
+FakeLabel.TextSize = 10
+FakeLabel.TextXAlignment = Enum.TextXAlignment.Left
+FakeLabel.Parent = Zr
+F.FakeLabel = FakeLabel
+
+Ui = Instance.new("TextBox")
+Ui.Size = UDim2.new(1, 0, 0, Y and 44 or 38)
+Ui.Position = UDim2.new(0, 0, 0, 24)
+Ui.BackgroundColor3 = Color3.fromRGB(18, 16, 28)
+Ui.PlaceholderText = "Masukkan Nama Palsu..."
+Ui.Text = ""
+Ui.TextColor3 = Color3.new(1, 1, 1)
+Ui.Font = Enum.Font.GothamBold
+Ui.TextSize = Q + 1
+Ui.PlaceholderColor3 = Color3.fromRGB(90, 80, 120)
+Ui.Parent = Zr
+Instance.new("UICorner", Ui).CornerRadius = UDim.new(0, 9)
+
+fbs = Instance.new("UIStroke", Ui)
+fbs.Color = Color3.fromRGB(90, 45, 180)
+fbs.Thickness = 1.5
+fbs.Transparency = .2
+fbp = Instance.new("UIPadding", Ui)
+fbp.PaddingLeft = UDim.new(0, 12)
+F.FakeNameStroke = fbs
+
+btnY = Y and 76 or 68
+vi = Instance.new("TextButton")
+vi.Size = UDim2.new(1, 0, 0, Y and 44 or 38)
+vi.Position = UDim2.new(0, 0, 0, btnY)
+vi.BackgroundColor3 = Color3.fromRGB(60, 130, 240)
+vi.Text = "✏️ TERAPKAN NAMA"
+vi.TextColor3 = Color3.new(1, 1, 1)
+vi.Font = Enum.Font.GothamBold
+vi.TextSize = Q + 1
+vi.Parent = Zr
+Instance.new("UICorner", vi).CornerRadius = UDim.new(0, 9)
+
+sbg = Instance.new("UIGradient", vi)
+sbg.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(80, 150, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 90, 200))})
+F.SetNameBtn = vi
+F.sbg = sbg
+
+FakeDivider = Instance.new("Frame")
+FakeDivider.Size = UDim2.new(1, 0, 0, 1)
+FakeDivider.Position = UDim2.new(0, 0, 0, (btnY + (Y and 52 or 46)) + 6)
+FakeDivider.BackgroundColor3 = Color3.fromRGB(40, 35, 60)
+FakeDivider.BorderSizePixel = 0
+FakeDivider.Parent = Zr
+
+streakSecY = (btnY + (Y and 52 or 46)) + 14
+StreakLabel = Instance.new("TextLabel")
+StreakLabel.Size = UDim2.new(1, 0, 0, 18)
+StreakLabel.Position = UDim2.new(0, 0, 0, streakSecY)
+StreakLabel.BackgroundTransparency = 1
+StreakLabel.Text = "🔥 FAKE STREAK KEMENANGAN"
+StreakLabel.TextColor3 = Color3.fromRGB(255, 140, 50)
+StreakLabel.Font = Enum.Font.GothamBold
+StreakLabel.TextSize = 10
+StreakLabel.TextXAlignment = Enum.TextXAlignment.Left
+StreakLabel.Parent = Zr
+
+Ai = Instance.new("TextBox")
+Ai.Size = UDim2.new(1, 0, 0, Y and 44 or 38)
+Ai.Position = UDim2.new(0, 0, 0, streakSecY + 22)
+Ai.BackgroundColor3 = Color3.fromRGB(18, 16, 28)
+Ai.PlaceholderText = "Contoh: 7, 25, 99"
+Ai.Text = ""
+Ai.TextColor3 = Color3.new(1, 1, 1)
+Ai.Font = Enum.Font.GothamBold
+Ai.TextSize = Q + 1
+Ai.PlaceholderColor3 = Color3.fromRGB(90, 80, 120)
+Ai.Parent = Zr
+Instance.new("UICorner", Ai).CornerRadius = UDim.new(0, 9)
+
+skbs = Instance.new("UIStroke", Ai)
+skbs.Color = Color3.fromRGB(180, 80, 20)
+skbs.Thickness = 1.5
+skbs.Transparency = .2
+skbp = Instance.new("UIPadding", Ai)
+skbp.PaddingLeft = UDim.new(0, 12)
+F.StreakBoxStroke = skbs
+F.StreakLabel = StreakLabel
+
+setStreakBtnY = (streakSecY + 22) + (Y and 52 or 46)
+Mi = Instance.new("TextButton")
+Mi.Size = UDim2.new(1, 0, 0, Y and 44 or 38)
+Mi.Position = UDim2.new(0, 0, 0, setStreakBtnY)
+Mi.BackgroundColor3 = Color3.fromRGB(200, 80, 20)
+Mi.Text = "🔥 TERAPKAN STREAK"
+Mi.TextColor3 = Color3.new(1, 1, 1)
+Mi.Font = Enum.Font.GothamBold
+Mi.TextSize = Q + 1
+Mi.Parent = Zr
+Instance.new("UICorner", Mi).CornerRadius = UDim.new(0, 9)
+
+sskgb = Instance.new("UIGradient", Mi)
+sskgb.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 120, 30)), ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 60, 10))})
+F.SetStreakBtn = Mi
+F.sskgb = sskgb
+
+Ii = Instance.new("TextLabel")
+Ii.Size = UDim2.new(1, 0, 0, 16)
+Ii.Position = UDim2.new(0, 0, 0, setStreakBtnY + (Y and 48 or 42))
+Ii.BackgroundTransparency = 1
+Ii.Text = ""
+Ii.TextColor3 = Color3.fromRGB(255, 160, 60)
+Ii.Font = Enum.Font.GothamBold
+Ii.TextSize = 10
+Ii.TextXAlignment = Enum.TextXAlignment.Left
+Ii.Parent = Zr
+
+noteY = setStreakBtnY + (Y and 70 or 64)
+FakeNote = Instance.new("TextLabel")
+FakeNote.Size = UDim2.new(1, 0, 0, 40)
+FakeNote.Position = UDim2.new(0, 0, 0, noteY)
+FakeNote.BackgroundTransparency = 1
+FakeNote.Text = "⚠️  Fake visual only. Rejoin jika tidak berhasil. \nMerah 1-24 | Hijau 25-49 | Biru 50-99 | Ungu 100+\nFake Streak harus punya streak minimal 1\nFake Rank masih butuh Palette Warna, jadi Belum Ada"
+FakeNote.TextColor3 = Color3.fromRGB(120, 115, 150)
+FakeNote.Font = Enum.Font.Gotham
+FakeNote.TextSize = 10
+FakeNote.TextWrapped = true
+FakeNote.TextXAlignment = Enum.TextXAlignment.Left
+FakeNote.Parent = Zr
+
+UtilPad = Instance.new("UIPadding", Qr)
+UtilPad.PaddingLeft = UDim.new(0, 6)
+UtilPad.PaddingRight = UDim.new(0, 6)
+UtilPad.PaddingTop = UDim.new(0, 8)
+UtilPad.PaddingBottom = UDim.new(0, 16)
+
+local function Di(c, X, V)
+    local L = Instance.new("TextButton")
+    L.Size = UDim2.new(1, 0, 0, Y and 42 or 38)
+    L.LayoutOrder = V
+    L.BackgroundColor3 = Color3.fromRGB(18, 16, 26)
+    L.Text = c
+    L.TextColor3 = Color3.fromRGB(200, 190, 220)
+    L.Font = Enum.Font.GothamBold
+    L.TextSize = Q
+    L.Parent = Qr
+    Instance.new("UICorner", L).CornerRadius = UDim.new(0, 9)
+    
+    local d = Instance.new("UIStroke", L)
+    d.Color = Color3.fromRGB(70, 35, 130)
+    d.Thickness = 1
+    d.Transparency = .4
+    
+    L.MouseButton1Click:Connect(function()
+        a()
+        X()
+    end)
+    return L
+end
+
+local ki = {}
+local ui = ""
+local c2 = 0
+local X2 = {"abadi", "abai", "abang", "abdi", "abu", "acara", "ada", "adab", "adang", "adat", "adik", "adil", "adu", "agama", "agar", "agen", "agung", "ahad", "ahli", "aib", "air", "ajak", "ajar", "aju", "akad", "akal", "akan", "akar", "akhir", "akhlak", "akibat", "akta", "aktif", "aku", "akun", "akurat", "alam", "alami", "alang", "alasan", "alat", "album", "alfa", "algojo", "ali", "alias", "alih", "alim", "alir", "aliran", "alis", "alkali", "alkitab", "alkohol", "allah", "alpa", "alu", "alun", "alur", "aluran", "amal", "aman", "baca", "badan", "bagaimana", "baik", "banyak", "baru", "bawa", "bawah", "bebas", "belum", "benar", "bentuk", "besar", "biasa", "bisa", "bukan", "bulan", "bumi", "burung", "cahaya", "cinta", "coba", "dalam", "dan", "dapat", "dari", "datang", "dekat", "dengan", "depan", "di", "dia", "diri", "dua", "dulu", "dunia", "uhuk", "uhuy", "bca", "yanto", "ilang", "oho", "aiba", "eni", "ungik", "aqua", "aikido"}
+
+local function V2(c, X)
+    if not g then return end
+    c2 = X or #c
+    if qi then
+        local X = math.random(1, 2)
+        local V = 0
+        if V < X and math.random() < .3 then
+            V = V + 1
+            task.wait(math.random() * .8 + .3)
+        end
+        local d = 1
+        while d <= #c do
+            if not g then return end
+            if V < X and (d > 1 and math.random() < .12) then
+                V = V + 1
+                task.wait(math.random() * .6 + .2)
+            end
+            if V < X and math.random() < .08 then
+                V = V + 1
+                local c = "qwertyuiopasdfghjklzxcvbnm"
+                local X = math.random(1, 2)
+                for X = 1, X, 1 do
+                    local V = math.random(1, #c)
+                    local d = string.upper(string.sub(c, V, V))
+                    local i = Enum.KeyCode[d]
+                    if i then
+                        L:SendKeyEvent(true, i, false, game)
+                        task.wait(.01)
+                        L:SendKeyEvent(false, i, false, game)
+                        task.wait(Yi + math.random() * (wi - Yi))
+                    end
+                end
+                task.wait(.1 + math.random() * .2)
+                for c = 1, X, 1 do
+                    L:SendKeyEvent(true, Enum.KeyCode.Backspace, false, game)
+                    task.wait(.03)
+                    L:SendKeyEvent(false, Enum.KeyCode.Backspace, false, game)
+                    task.wait(.04)
+                end
+            end
+            if V < X and math.random() < .1 then
+                V = V + 1
+                local c = "qwertyuiopasdfghjklzxcvbnm"
+                local X = math.random(1, #c)
+                local d = string.upper(string.sub(c, X, X))
+                local i = Enum.KeyCode[d]
+                if i then
+                    L:SendKeyEvent(true, i, false, game)
+                    task.wait(.01)
+                    L:SendKeyEvent(false, i, false, game)
+                    task.wait(Yi + math.random() * (wi - Yi))
+                    task.wait(.08 + math.random() * .15)
+                    L:SendKeyEvent(true, Enum.KeyCode.Backspace, false, game)
+                    task.wait(.03)
+                    L:SendKeyEvent(false, Enum.KeyCode.Backspace, false, game)
+                    task.wait(.05 + math.random() * .1)
+                end
+            end
+            local i = string.upper(string.sub(c, d, d))
+            local j = Enum.KeyCode[i]
+            if j then
+                L:SendKeyEvent(true, j, false, game)
+                task.wait(.01)
+                L:SendKeyEvent(false, j, false, game)
+                task.wait(Yi + math.random() * (wi - Yi))
+            end
+            d = d + 1
+        end
+        if V < X and math.random() < .15 then
+            V = V + 1
+            local c = Hi[math.random(1, #Hi)]
+            task.wait(.2 + math.random() * .3)
+            for X = 1, #c, 1 do
+                local V = string.upper(string.sub(c, X, X))
+                local d = Enum.KeyCode[V]
+                if d then
+                    L:SendKeyEvent(true, d, false, game)
+                    task.wait(.01)
+                    L:SendKeyEvent(false, d, false, game)
+                    task.wait(Yi * .7 + (math.random() * wi) * .5)
+                end
+            end
+            task.wait(.15 + math.random() * .2)
+            for c = 1, #c, 1 do
+                L:SendKeyEvent(true, Enum.KeyCode.Backspace, false, game)
+                task.wait(.03)
+                L:SendKeyEvent(false, Enum.KeyCode.Backspace, false, game)
+                task.wait(.03)
+            end
+            task.wait(.1 + math.random() * .15)
+        end
+    else
+        for X = 1, #c, 1 do
+            local V = string.upper(string.sub(c, X, X))
+            local d = Enum.KeyCode[V]
+            if d then
+                L:SendKeyEvent(true, d, false, game)
+                task.wait(.01)
+                L:SendKeyEvent(false, d, false, game)
+                task.wait(Yi + math.random() * (wi - Yi))
+            end
+        end
+    end
+    task.wait(xi + math.random() * (ti - xi))
+    L:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+    L:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+end
+
+local L2 = false
+local d2 = false
+yi = function()
+    if not ji or not g or L2 then return end
+    L2 = true
+    if Ri and Ci then
+        local c = d:WaitForChild("PlayerGui")
+        local X = c:FindFirstChild("MatchUI", true)
+        local V = ""
+        if X then
+            for c, X in pairs(X:GetDescendants()) do
+                if (X.Name == "WordServer" or X.Name == "Word") and (X:IsA("TextLabel") and X.Visible) then
+                    local c = (X.Text:gsub("%s+", "")):lower()
+                    if #c >= 1 and #c <= 4 then
+                        V = c
+                    end
+                end
+            end
+        end
+        if V ~= "" then
+            ii.Text = "👻 SPAM " .. (li + 1 .. "/2")
+            for c = 1, #V, 1 do
+                local X = string.upper(string.sub(V, c, c))
+                local d = Enum.KeyCode[X]
+                if d then
+                    L:SendKeyEvent(true, d, false, game)
+                    task.wait(.01)
+                    L:SendKeyEvent(false, d, false, game)
+                    task.wait(.01)
+                end
+            end
+            local c = {"A", "Q", "X", "Z", "J", "V"}
+            for X = 1, 2, 1 do
+                local V = c[math.random(1, #c)]
+                local d = Enum.KeyCode[V]
+                if d then
+                    L:SendKeyEvent(true, d, false, game)
+                    task.wait(.01)
+                    L:SendKeyEvent(false, d, false, game)
+                    task.wait(.01)
+                end
+            end
+            task.wait(xi + math.random() * (ti - xi))
+            L:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+            L:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+        end
+        li = li + 1
+        if li >= 2 then
+            Ci = false
+            li = 0
+            ai = 0
+            tuyulStatus.Text = "Siap: 0/" .. (ri .. " jawab benar")
+            tuyulStatus.TextColor3 = Color3.fromRGB(180, 80, 255)
+            ii.Text = "-"
+        else
+            tuyulStatus.Text = "SPAM GILIRAN " .. (li .. "/2...")
+            tuyulStatus.TextColor3 = Color3.fromRGB(255, 80, 80)
+        end
+        L2 = false
+        return
+    end
+    
+    local c = d:WaitForChild("PlayerGui")
+    local X = c:FindFirstChild("MatchUI", true)
+    local V = ""
+    if X then
+        for c, X in pairs(X:GetDescendants()) do
+            if (X.Name == "WordServer" or X.Name == "Word") and (X:IsA("TextLabel") and X.Visible) then
+                local c = (X.Text:gsub("%s+", "")):lower()
+                if #c >= 1 and #c <= 4 then
+                    V = c
+                end
+            end
+        end
+    end
+    if V ~= "" then
+        di.Text = "AWALAN: " .. V:upper()
+        local c = {}
+        local X = {}
+        for c, L in pairs(Ki) do
+            if L then
+                for c, L in ipairs(Fi[c]) do
+                    if string.sub(L, 1, #V) == V and (not ki[L] and #L > #V) then
+                        table.insert(X, L)
+                    end
+                end
+            end
+        end
+        if #X > 0 then
+            c = X
+        end
+        if #c == 0 then
+            for X, L in ipairs(X2) do
+                if string.sub(L, 1, #V) == V and (not ki[L] and #L > #V) then
+                    table.insert(c, L)
+                end
+            end
+        end
+        if #c > 0 then
+            local X = c[math.random(1, #c)]
+            local L = "KBBI (SEMUA)"
+            for c, V in pairs(Ki) do
+                if V and table.find(Fi[c], X) then
+                    L = "KATA SULIT (" .. (c .. ")")
+                    break
+                end
+            end
+            print("🤖 RAFLYXCILLO: " .. (X:upper() .. (" | AWALAN: " .. (V:upper() .. (" | " .. L)))))
+            ii.Text = X:upper()
+            ui = X
+            V2(string.sub(X, #V + 1), #X)
+            ki[X] = true
+            if Ri and not Ci then
+                ai = ai + 1
+                tuyulStatus.Text = "Jawab benar: " .. (ai .. ("/" .. (ri .. (" → " .. (ri - ai .. "x lagi")))))
+                tuyulStatus.TextColor3 = Color3.fromRGB(180, 80, 255)
+                if ai >= ri then
+                    Ci = true
+                    li = 0
+                    tuyulStatus.Text = "SPAM MODE AKTIF!"
+                    tuyulStatus.TextColor3 = Color3.fromRGB(255, 80, 80)
+                    ii.Text = "👻 SPAM MODE"
+                end
+            end
+            task.wait(1)
+            di.Text = "AWALAN: -"
+            ii.Text = "-"
+        end
+    end
+    task.wait(.5)
+    L2 = false
+end
+
+task.spawn(function()
+    local c = {
+        IF = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/IF.txt",
+        X = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/X.txt",
+        NG = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/NG.txt",
+        AI = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/AI.txt",
+        ["SEMUA KATA SULIT"] = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/sulit.txt",
+        CY = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/CY.txt",
+        UI = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/UI.txt",
+        KS = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/KS.txt",
+        LY = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/LY.txt",
+        GY = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/GY.txt",
+        LT = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/LT.txt",
+        EO = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/EO.txt",
+        OE = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/OE.txt",
+        EKS = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/EKS.txt",
+        OO = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/OO.txt",
+        KN = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/KN.txt",
+        Q = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/Q.txt",
+        MP = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/MP.txt",
+        SF = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/SF.txt",
+        TT = "https://raw.githubusercontent.com/DexterHUB99/DexterHUB/refs/heads/main/TT.txt"
+    }
+    for c, X in pairs(c) do
+        task.spawn(function()
+            local V, L = pcall(function() return game:HttpGet(X) end)
+            if V and type(L) == "string" then
+                for X in string.gmatch(L, "[^\r\n]+") do
+                    local V = (X:gsub("%s+", "")):lower()
+                    if #V > 1 and string.match(V, "^%a+$") then
+                        table.insert(Fi[c], V)
+                    end
+                end
+                print("🔥 Kategori " .. (c .. " Loaded!"))
+            end
+        end)
+    end
+end)
+
+function shuffleTable(c)
+    for X = #c, 2, -1 do
+        local V = math.random(X)
+        c[X], c[V] = c[V], c[X]
+    end
+end
+
+task.spawn(function()
+    local c = {"https://raw.githubusercontent.com/DexterHUB99/Cari-Kata/refs/heads/main/kamus.txt"}
+    local X = {}
+    for c, V in ipairs(c) do
+        if not g then break end
+        local L, d = pcall(function() return game:HttpGet(V) end)
+        if L and (type(d) == "string" and #d > 1000) then
+            for c in string.gmatch(d, "[^\r\n]+") do
+                local V = (c:gsub("%s+", "")):lower()
+                if #V > 1 and string.match(V, "^%a+$") then
+                    table.insert(X, V)
+                end
+            end
+        end
+    end
+    if #X > 1000 then
+        for c, X in ipairs(X) do
+            table.insert(X2, X)
+        end
+        shuffleTable(X2)
+        print("✅ RAFLYXCILLO: " .. (#X2 .. " Kata Dimuat!"))
+    end
+end)
+
+function dismissEndScreen()
+    pcall(function()
+        local c = workspace.CurrentCamera.ViewportSize
+        L:SendMouseButtonEvent(c.X / 2, c.Y / 2, 0, true, game, 0)
+        task.wait(.05)
+        L:SendMouseButtonEvent(c.X / 2, c.Y / 2, 0, false, game, 0)
+    end)
+end
+
+function startInstantRejoin()
+    if not gi or d2 then return end
+    d2 = true
+    task.wait(1)
+    dismissEndScreen()
+    task.spawn(function()
+        local c = d:WaitForChild("PlayerGui")
+        while d2 and g do
+            if not gi then
+                d2 = false
+                break
+            end
+            local X = c:FindFirstChild("MatchUI", true)
+            if X and X.Enabled == true then
+                d2 = false
+                if ji then
+                    task.wait(1.5)
+                    yi()
+                end
+                break
+            end
+            pcall(function()
+                L:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+                task.wait(.02)
+                L:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+            end)
+            task.wait(.15)
+        end
+    end)
+end
+
+function findBlatantWord(c)
+    if c == "" then return "" end
+    local X = {}
+    local V = {}
+    for X, L in pairs(Ki) do
+        if L then
+            for X, L in ipairs(Fi[X]) do
+                if string.sub(L, 1, #c) == c and (not ki[L] and #L > #c) then
+                    table.insert(V, L)
+                end
+            end
+        end
+    end
+    if #V > 0 then X = V end
+    if #X == 0 then
+        for V, L in ipairs(X2) do
+            if string.sub(L, 1, #c) == c and (not ki[L] and #L > #c) then
+                table.insert(X, L)
+            end
+        end
+    end
+    if #X > 0 then return X[math.random(1, #X)] end
+    return ""
+end
+
+local i2 = Instance.new("TextButton")
+i2.Size = UDim2.new(1, -4, 0, Y and 38 or 34)
+i2.LayoutOrder = 35
+i2.BackgroundColor3 = Color3.fromRGB(120, 20, 20)
+i2.BorderSizePixel = 0
+i2.Text = "💀 SUBMIT BLATANT"
+i2.TextColor3 = Color3.fromRGB(255, 255, 255)
+i2.Font = Enum.Font.GothamBold
+i2.TextSize = Y and 12 or 13
+i2.Visible = false
+i2.Parent = mr
+Instance.new("UICorner", i2).CornerRadius = UDim.new(0, 8)
+
+local j2 = Instance.new("UIStroke", i2)
+j2.Color = Color3.fromRGB(255, 60, 60)
+j2.Thickness = 1.5
+
+i2.MouseButton1Click:Connect(function()
+    if not bi or not g then return end
+    if si == "" then
+        ii.Text = "💀 Kata belum siap!"
+        return
+    end
+    local c = si
+    local X = Ni
+    local V = (c:lower()):sub(#X + 1)
+    si = ""
+    Ni = ""
+    i2.Visible = false
+    i2.Text = "💀 SUBMIT BLATANT"
+    i2.BackgroundColor3 = Color3.fromRGB(120, 20, 20)
+    ki[c] = true
+    ii.Text = "💀 " .. c:upper()
+    print("💀 Blatant submit: " .. (c:upper() .. (" | awalan: " .. (X:upper() .. (" | suffix: " .. V)))))
+    pcall(function()
+        game:GetService("ReplicatedStorage").Remotes.SubmitWord:FireServer(V)
+    end)
+end)
+
+local g2 = game:GetService("ContextActionService")
+g2:BindActionAtPriority("RAFLYXCILLOBlatantEnter", function(c, X, V)
+    if X ~= Enum.UserInputState.Begin then return Enum.ContextActionResult.Pass end
+    if not bi or not g then return Enum.ContextActionResult.Pass end
+    if si == "" then return Enum.ContextActionResult.Pass end
+    local L = si
+    local d = Ni
+    local i = (L:lower()):sub(#d + 1)
+    si = ""
+    Ni = ""
+    ki[L] = true
+    ii.Text = "💀 " .. L:upper()
+    print("💀 Blatant [ENTER]: " .. (L:upper() .. (" | suffix: " .. i)))
+    pcall(function()
+        game:GetService("ReplicatedStorage").Remotes.SubmitWord:FireServer(i)
+    end)
+    return Enum.ContextActionResult.Sink
+end, false, Enum.ContextActionPriority.High.Value + 1, Enum.KeyCode.Return)
+
+task.spawn(function()
+    local c = 0
+    while task.wait(.1) do
+        if not g then i2.Visible = false end
+        if bi and (g and si ~= "") then
+            i2.Visible = true
+            c = c + .1
+            local X = math.abs(math.sin(c * 3))
+            i2.BackgroundColor3 = Color3.fromRGB(math.floor(100 + X * 80), math.floor(10 + X * 10), math.floor(10 + X * 10))
+            i2.Text = "💀 TAP → " .. si:upper()
+        else
+            i2.Visible = false
+            c = 0
+        end
+    end
+end)
+
+local Y2 = ((game:GetService("ReplicatedStorage")):WaitForChild("Remotes")):WaitForChild("MatchUI")
+function botForceClear()
+    local c = c2 + 1
+    for c = 1, c, 1 do
+        L:SendKeyEvent(true, Enum.KeyCode.Backspace, false, game)
+        task.wait(Ji + math.random() * (mi - Ji))
+        L:SendKeyEvent(false, Enum.KeyCode.Backspace, false, game)
+    end
+    c2 = 0
+    task.wait(.1)
+end
+
+Y2.OnClientEvent:Connect(function(c)
+    if not g then return end
+    if c == "StartTurn" or c == "YourTurn" then
+        d2 = false
+        if bi then
+            task.spawn(function()
+                task.wait(.6)
+                local c = ""
+                pcall(function()
+                    local X = d:WaitForChild("PlayerGui")
+                    local V = X:WaitForChild("MatchUI")
+                    local L = V.BottomUI.TopUI.WordServerFrame.WordServer
+                    c = (L.Text:lower()):gsub("[^a-z]", "")
+                end)
+                if c == "" then
+                    local X = (di.Text:lower()):match("awalan:%s*([a-z]+)")
+                    if X then c = X end
+                end
+                if c ~= "" then
+                    local X = findBlatantWord(c)
+                    if X ~= "" then
+                        Ni = c
+                        si = X
+                        di.Text = "AWALAN: " .. (c:upper() .. " [BLATANT SIAP]")
+                        ii.Text = "💀 " .. (X:upper() .. " (ready)")
+                        print("💀 Blatant ready: " .. (X:upper() .. (" | awalan: " .. c:upper())))
+                    else
+                        ii.Text = "💀 Blatant: Kata tidak ditemukan"
+                    end
+                else
+                    ii.Text = "💀 Blatant: Awalan tidak terdeteksi"
+                end
+            end)
+        end
+        if not L2 and not bi then
+            task.wait(Zi + math.random() * (Qi - Zi))
+            yi()
+        end
+    elseif c == "Eliminated" or c == "EndMatch" or c == "HideMatchUI" then
+        Ci = false
+        li = 0
+        ai = 0
+        if Ri then
+            tuyulStatus.Text = "Siap: 0/" .. (ri .. " jawab benar")
+            tuyulStatus.TextColor3 = Color3.fromRGB(180, 80, 255)
+        end
+        di.Text = "AWALAN: -"
+        ii.Text = "-"
+        startInstantRejoin()
+    elseif c == "Mistake" and ji then
+        if bi and Ni ~= "" then
+            task.spawn(function()
+                task.wait(.2)
+                if si ~= "" then ki[si] = true end
+                local c = findBlatantWord(Ni)
+                if c ~= "" then
+                    si = c
+                    ii.Text = "💀 " .. (c:upper() .. " (retry)")
+                    print("💀 Blatant retry: " .. (c:upper() .. (" | awalan: " .. Ni:upper())))
+                else
+                    si = ""
+                    ii.Text = "💀 Blatant: Habis kata!"
+                    print("💀 Blatant: Tidak ada kata lain untuk awalan " .. Ni:upper())
+                end
+            end)
+        end
+        if Ri and Ci then
+            print("[Tuyul] Sengaja salah ke-" .. (li .. ("/" .. Si)))
+        else
+            local c = d:WaitForChild("PlayerGui")
+            local X = c:FindFirstChild("MatchUI", true)
+            if X then
+                local c = X:FindFirstChild("WordSubmit", true)
+                if c and (c.Visible and c.BackgroundTransparency < .6) then
+                    if ui ~= "" then ki[ui] = true end
+                    print("⚠️ RAFLYXCILLO: Salah! Menghapus & Cari Baru...")
+                    L2 = true
+                    botForceClear()
+                    L2 = false
+                    yi()
+                end
+            end
+        end
+    end
+end)
+
+local w2 = ""
+function applyFakeName(c)
+    local X = d.Character
+    if X and X:FindFirstChild("Humanoid") then
+        X.Humanoid.DisplayName = c
+        for X, V in pairs(X:GetDescendants()) do
+            if V:IsA("TextLabel") and (V.Text == d.Name or V.Text == d.DisplayName or V.Text == w2) then
+                V.Text = c
+            end
+        end
+        w2 = c
+        print("🎭 Fake Name '" .. (c .. "' diterapkan!"))
+    end
+end
+
+vi.MouseButton1Click:Connect(function()
+    applyFakeName(Ui.Text)
+    a()
+end)
+
+Ui.FocusLost:Connect(function(c)
+    if c then
+        a()
+        applyFakeName(Ui.Text)
+    end
+end)
+
+local x2 = {
+    {min = 1, max = 24, image = "rbxassetid://124831674833103"},
+    {min = 25, max = 49, image = "rbxassetid://117598829066059"},
+    {min = 50, max = 99, image = "rbxassetid://129825881918699"},
+    {min = 100, max = 999999, image = "rbxassetid://135836679344581"}
+}
+
+function getStreakAsset(c)
+    for X, V in pairs(x2) do
+        if c >= V.min and c <= V.max then
+            return V.image
+        end
+    end
+    return x2[1].image
+end
+
+function applyFakeStreak(c)
+    c = c:gsub("%s+", "")
+    if c == "" then
+        Ii.Text = "❌ Input kosong!"
+        return
+    end
+    if not c:match("^%d+$") then
+        Ii.Text = "❌ Angka saja!"
+        return
+    end
+    local X = tonumber(c)
+    local V = d.Character
+    if not V then
+        Ii.Text = "❌ Karakter tidak ditemukan!"
+        return
+    end
+    local L, i = pcall(function() return V.Head.StreakBillboard.FireBG end)
+    if not L or not i then
+        Ii.Text = "❌ StreakBillboard tidak ada!"
+        return
+    end
+    local j = i:FindFirstChild("StreakNumber")
+    if j then j.Text = c end
+    i.Image = getStreakAsset(X)
+    Ii.Text = "✅ Streak " .. (c .. " diterapkan!")
+    print("🔥 Fake Streak '" .. (c .. ("' | asset: " .. getStreakAsset(X))))
+end
+
+Mi.MouseButton1Click:Connect(function()
+    a()
+    applyFakeStreak(Ai.Text)
+end)
+
+Ai.FocusLost:Connect(function(c)
+    if c then
+        a()
+        applyFakeStreak(Ai.Text)
+    end
+end)
+
+local t2, J2
+local m2 = Instance.new("TextButton")
+m2.Size = UDim2.new(1, -(h * 2 + 30), 1, 0)
+m2.BackgroundTransparency = 1
+m2.Text = ""
+m2.ZIndex = 5
+m2.Parent = B
+
+local Z2, Q2
+m2.InputBegan:Connect(function(c)
+    if not R(c) then return end
+    Z2 = c.Position
+    Q2 = y.Position
+    c.Changed:Connect(function()
+        if c.UserInputState == Enum.UserInputState.End then
+            Z2 = nil
+        end
+    end)
+end)
+
+V.InputChanged:Connect(function(c)
+    if not r(c) then return end
+    if E then
+        local X = c.Position - f
+        local V, L = G(o + X.X, e + X.Y)
+        y.Size = UDim2.new(0, V, 0, L)
+        T()
+        return
+    end
+    if Z2 then
+        local X = c.Position - Z2
+        local V = UDim2.new(Q2.X.Scale, Q2.X.Offset + X.X, Q2.Y.Scale, Q2.Y.Offset + X.Y)
+        y.Position = V
+        W.Position = UDim2.new(V.X.Scale, V.X.Offset - 2, V.Y.Scale, V.Y.Offset - 2)
+        P()
+        return
+    end
+    if Yr then
+        local X = c.Position - wr
+        gr = X.Magnitude
+        ir.Position = UDim2.new(xr.X.Scale, xr.X.Offset + X.X, xr.Y.Scale, xr.Y.Offset + X.Y)
+    end
+end)
+
+V.InputEnded:Connect(function(c)
+    if R(c) then E = false end
+end)
+
+local q2 = false
+local R2
+function toggleNoclip(c)
+    q2 = c
+    if q2 then
+        R2 = (game:GetService("RunService")).Stepped:Connect(function()
+            if d.Character then
+                for c, X in pairs(d.Character:GetDescendants()) do
+                    if X:IsA("BasePart") then
+                        X.CanCollide = false
+                    end
+                end
+            end
+        end)
+    else
+        if R2 then R2:Disconnect() end
+    end
+end
+
+local r2 = false
+local a2 = {"admin", "owner", "developer", "pengembang", "staff", "seniorstaff", "juniorstaff", "moderator", "mod", "helper", "builder", "operator", "manager"}
+
+function isAdminName(c)
+    local X = (c:lower()):gsub("[^%a%d]", "")
+    for c, V in pairs(a2) do
+        if X:find(V, 1, true) then
+            return true, V
+        end
+    end
+    return false
+end
+
+function antiAdminCheck()
+    for c, X in pairs(game.Players:GetPlayers()) do
+        if X ~= d then
+            local c, V = isAdminName(X.Name)
+            if not c then
+                c, V = isAdminName(X.DisplayName)
+            end
+            if c then
+                print("🛡️ ADMIN DETECTED: " .. (X.Name .. (" [" .. (V .. "] — Pindah server!"))))
+                di.Text = "⚠️ ADMIN: " .. X.Name
+                ii.Text = "Pindah server..."
+                task.wait(.5)
+                game:GetService("TeleportService"):Teleport(game.PlaceId, d)
+                return
+            end
+        end
+    end
+end
+
+game.Players.PlayerAdded:Connect(function(c)
+    if not r2 then return end
+    task.wait(1)
+    antiAdminCheck()
+end)
+
+task.spawn(function()
+    while task.wait(5) do
+        if not g then break end
+        if r2 then antiAdminCheck() end
+    end
+end)
+
+local C2 = Instance.new("TextButton")
+C2.Size = UDim2.new(1, 0, 0, Y and 42 or 38)
+C2.LayoutOrder = 0
+C2.BackgroundColor3 = Color3.fromRGB(25, 22, 38)
+C2.Text = "🎨  TEMA: CYBERPUNK ▼"
+C2.TextColor3 = Color3.new(1, 1, 1)
+C2.Font = Enum.Font.GothamBold
+C2.TextSize = Q
+C2.Parent = Qr
+Instance.new("UICorner", C2).CornerRadius = UDim.new(0, 9)
+
+themeBtnStroke = Instance.new("UIStroke", C2)
+themeBtnStroke.Color = Color3.fromRGB(150, 80, 255)
+themeBtnStroke.Thickness = 1.5
+themeBtnStroke.Transparency = .2
+
+local l2 = Instance.new("Frame")
+l2.Size = UDim2.new(1, 0, 0, 0)
+l2.BackgroundColor3 = Color3.fromRGB(14, 13, 22)
+l2.ClipsDescendants = true
+l2.BorderSizePixel = 0
+l2.LayoutOrder = 1
+l2.Parent = Qr
+Instance.new("UICorner", l2).CornerRadius = UDim.new(0, 9)
+
+themeDFStroke = Instance.new("UIStroke", l2)
+themeDFStroke.Color = Color3.fromRGB(70, 35, 130)
+themeDFStroke.Thickness = 1
+themeDFStroke.Transparency = .4
+
+local S2 = {
+    CYBERPUNK = Color3.fromRGB(150, 80, 255),
+    CRIMSON = Color3.fromRGB(255, 80, 100),
+    MATRIX = Color3.fromRGB(50, 255, 120),
+    SAKURA = Color3.fromRGB(255, 130, 200),
+    OCEAN = Color3.fromRGB(60, 160, 255),
+    FLAME = Color3.fromRGB(255, 160, 50)
+}
+
+local b2 = {"CYBERPUNK", "CRIMSON", "MATRIX", "SAKURA", "OCEAN", "FLAME"}
+local s2 = false
+local N2 = Y and 40 or 35
+
+function refreshThemeDropUI()
+    for c, X in pairs(l2:GetChildren()) do
+        if X:IsA("Frame") or X:IsA("TextButton") then
+            X:Destroy()
+        end
+    end
+    for c, X in ipairs(b2) do
+        local V = Instance.new("Frame")
+        V.Size = UDim2.new(1, -12, 0, Y and 34 or 30)
+        V.Position = UDim2.new(0, 6, 0, (c - 1) * N2 + 5)
+        V.BackgroundColor3 = H == X and Color3.fromRGB(30, 25, 50) or Color3.fromRGB(20, 18, 30)
+        V.BorderSizePixel = 0
+        V.Parent = l2
+        Instance.new("UICorner", V).CornerRadius = UDim.new(0, 7)
+        
+        if H == X then
+            local c = Instance.new("UIStroke", V)
+            c.Color = S2[X]
+            c.Thickness = 1
+            c.Transparency = .2
+        end
+        
+        local L = Instance.new("Frame")
+        L.Size = UDim2.new(0, 10, 0, 10)
+        L.Position = UDim2.new(0, 10, .5, -5)
+        L.BackgroundColor3 = S2[X]
+        L.BorderSizePixel = 0
+        L.Parent = V
+        Instance.new("UICorner", L).CornerRadius = UDim.new(1, 0)
+        
+        local d = Instance.new("TextLabel")
+        d.Size = UDim2.new(1, -50, 1, 0)
+        d.Position = UDim2.new(0, 28, 0, 0)
+        d.BackgroundTransparency = 1
+        d.Text = X .. (H == X and "  ✔" or "")
+        d.TextColor3 = H == X and S2[X] or Color3.fromRGB(180, 170, 200)
+        d.Font = Enum.Font.GothamBold
+        d.TextSize = Q
+        d.TextXAlignment = Enum.TextXAlignment.Left
+        d.Parent = V
+        
+        local i = Instance.new("TextButton")
+        i.Size = UDim2.new(1, 0, 1, 0)
+        i.BackgroundTransparency = 1
+        i.Text = ""
+        i.Parent = V
+        
+        i.MouseButton1Click:Connect(function()
+            a()
+            K(X)
+            C2.Text = "🎨  TEMA: " .. (X .. " ▼")
+            themeBtnStroke.Color = S2[X]
+            themeDFStroke.Color = S2[X]
+            s2 = false
+            l2:TweenSize(UDim2.new(1, 0, 0, 0), "Out", "Quart", .2, true)
+        end)
+    end
+end
+
+C2.MouseButton1Click:Connect(function()
+    a()
+    s2 = not s2
+    C2.Text = "🎨  TEMA: " .. (H .. (s2 and " ▲" or " ▼"))
+    l2:TweenSize(UDim2.new(1, 0, 0, s2 and #b2 * N2 + 10 or 0), "Out", "Quart", .3, true)
+    if s2 then refreshThemeDropUI() end
+end)
+
+UtilDivider = Instance.new("Frame")
+UtilDivider.Size = UDim2.new(1, 0, 0, 1)
+UtilDivider.BackgroundColor3 = Color3.fromRGB(40, 35, 60)
+UtilDivider.BorderSizePixel = 0
+UtilDivider.LayoutOrder = 2
+UtilDivider.Parent = Qr
+
+Di("💀  RESPAWN", function() d.Character:BreakJoints() end, 3)
+Di("⭐️  REJOIN SERVER", function() game:GetService("TeleportService"):Teleport(game.PlaceId, d) end, 4)
+Wi("NOCLIP", Qr, false, function(c) toggleNoclip(c) end, 5)
+Wi("🛡️ ANTI ADMIN", Qr, false, function(c) r2 = c end, 6)
+
+local H2 = Instance.new("Frame")
+H2.Size = UDim2.new(1, 0, 0, 0)
+H2.AutomaticSize = Enum.AutomaticSize.Y
+H2.LayoutOrder = 7
+H2.BackgroundColor3 = Color3.fromRGB(14, 12, 22)
+H2.BorderSizePixel = 0
+H2.Parent = Qr
+Instance.new("UICorner", H2).CornerRadius = UDim.new(0, 11)
+
+tuyulStroke = Instance.new("UIStroke", H2)
+tuyulStroke.Color = Color3.fromRGB(120, 40, 200)
+tuyulStroke.Thickness = 1.5
+tuyulStroke.Transparency = .2
+F.tuyulStroke = tuyulStroke
+
+tuyulPad = Instance.new("UIPadding", H2)
+tuyulPad.PaddingLeft = UDim.new(0, 10)
+tuyulPad.PaddingRight = UDim.new(0, 10)
+tuyulPad.PaddingTop = UDim.new(0, 10)
+tuyulPad.PaddingBottom = UDim.new(0, 10)
+
+tuyulLayout = Instance.new("UIListLayout")
+tuyulLayout.Padding = UDim.new(0, 8)
+tuyulLayout.SortOrder = Enum.SortOrder.LayoutOrder
+tuyulLayout.Parent = H2
+
+tuyulHeader = Instance.new("TextLabel")
+tuyulHeader.Size = UDim2.new(1, 0, 0, 18)
+tuyulHeader.LayoutOrder = 0
+tuyulHeader.BackgroundTransparency = 1
+tuyulHeader.Text = "👾 MODE TUYUL"
+tuyulHeader.TextColor3 = Color3.fromRGB(180, 80, 255)
+tuyulHeader.Font = Enum.Font.GothamBold
+tuyulHeader.TextSize = 11
+tuyulHeader.TextXAlignment = Enum.TextXAlignment.Left
+tuyulHeader.Parent = H2
+F.tuyulHeader = tuyulHeader
+
+tuyulSubHeader = Instance.new("TextLabel")
+tuyulSubHeader.Size = UDim2.new(1, 0, 0, 14)
+tuyulSubHeader.LayoutOrder = 1
+tuyulSubHeader.BackgroundTransparency = 1
+tuyulSubHeader.Text = "Menjawab Benar, Jika Tujuan Tercapai Akan Menjawab Acak"
+tuyulSubHeader.TextColor3 = Color3.fromRGB(120, 100, 160)
+tuyulSubHeader.Font = Enum.Font.Gotham
+tuyulSubHeader.TextSize = 9
+tuyulSubHeader.TextXAlignment = Enum.TextXAlignment.Left
+tuyulSubHeader.Parent = H2
+
+tuyulDiv = Instance.new("Frame")
+tuyulDiv.Size = UDim2.new(1, 0, 0, 1)
+tuyulDiv.LayoutOrder = 2
+tuyulDiv.BackgroundColor3 = Color3.fromRGB(60, 30, 100)
+tuyulDiv.BorderSizePixel = 0
+tuyulDiv.Parent = H2
+
+local F2 = Instance.new("Frame")
+F2.Size = UDim2.new(1, 0, 0, Y and 32 or 30)
+F2.LayoutOrder = 3
+F2.BackgroundTransparency = 1
+F2.Parent = H2
+
+tuyulToggleLbl = Instance.new("TextLabel")
+tuyulToggleLbl.Size = UDim2.new(1, -60, 1, 0)
+tuyulToggleLbl.BackgroundTransparency = 1
+tuyulToggleLbl.Text = "AKTIFKAN TUYUL"
+tuyulToggleLbl.TextColor3 = Color3.fromRGB(210, 200, 230)
+tuyulToggleLbl.Font = Enum.Font.GothamBold
+tuyulToggleLbl.TextSize = Q
+tuyulToggleLbl.TextXAlignment = Enum.TextXAlignment.Left
+tuyulToggleLbl.Parent = F2
+
+local K2 = Y and 48 or 44
+local O2 = Y and 26 or 22
+
+tuyulPill = Instance.new("Frame")
+tuyulPill.Size = UDim2.new(0, K2, 0, O2)
+tuyulPill.Position = UDim2.new(1, -K2, .5, -O2 / 2)
+tuyulPill.BackgroundColor3 = Color3.fromRGB(180, 40, 50)
+tuyulPill.BorderSizePixel = 0
+tuyulPill.Parent = F2
+Instance.new("UICorner", tuyulPill).CornerRadius = UDim.new(1, 0)
+
+local W2 = Y and 20 or 16
+tuyulKnob = Instance.new("Frame")
+tuyulKnob.Size = UDim2.new(0, W2, 0, W2)
+tuyulKnob.Position = UDim2.new(0, 3, .5, -W2 / 2)
+tuyulKnob.BackgroundColor3 = Color3.new(1, 1, 1)
+tuyulKnob.BorderSizePixel = 0
+tuyulKnob.Parent = tuyulPill
+Instance.new("UICorner", tuyulKnob).CornerRadius = UDim.new(1, 0)
+
+tuyulToggleBtn = Instance.new("TextButton")
+tuyulToggleBtn.Size = UDim2.new(1, 0, 1, 0)
+tuyulToggleBtn.BackgroundTransparency = 1
+tuyulToggleBtn.Text = ""
+tuyulToggleBtn.Parent = F2
+
+tuyulToggleBtn.MouseButton1Click:Connect(function()
+    Ri = not Ri
+    ai = 0
+    Ci = false
+    li = 0
+    if Ri then
+        tuyulStatus.Text = "Siap: 0/" .. (ri .. " jawab benar")
+        tuyulStatus.TextColor3 = Color3.fromRGB(180, 80, 255)
+    else
+        tuyulStatus.Text = "Limit: " .. (ri .. "x jawab benar → mengalah")
+        tuyulStatus.TextColor3 = Color3.fromRGB(180, 80, 255)
+    end
+    tuyulPill.BackgroundColor3 = Ri and Color3.fromRGB(30, 180, 110) or Color3.fromRGB(180, 40, 50)
+    tuyulKnob.Position = Ri and UDim2.new(1, -(W2 + 3), .5, -W2 / 2) or UDim2.new(0, 3, .5, -W2 / 2)
+    a()
+end)
+
+tuyulInputLabel = Instance.new("TextLabel")
+tuyulInputLabel.Size = UDim2.new(1, 0, 0, 14)
+tuyulInputLabel.LayoutOrder = 4
+tuyulInputLabel.BackgroundTransparency = 1
+tuyulInputLabel.Text = "Jawab benar berapa kali sebelum mengalah?"
+tuyulInputLabel.TextColor3 = Color3.fromRGB(160, 140, 200)
+tuyulInputLabel.Font = Enum.Font.Gotham
+tuyulInputLabel.TextSize = 9
+tuyulInputLabel.TextXAlignment = Enum.TextXAlignment.Left
+tuyulInputLabel.Parent = H2
+
+local y2 = Instance.new("Frame")
+y2.Size = UDim2.new(1, 0, 0, Y and 38 or 34)
+y2.LayoutOrder = 5
+y2.BackgroundTransparency = 1
+y2.Parent = H2
+
+tuyulBox = Instance.new("TextBox")
+tuyulBox.Size = UDim2.new(.55, 0, 1, 0)
+tuyulBox.BackgroundColor3 = Color3.fromRGB(18, 16, 28)
+tuyulBox.Text = "3"
+tuyulBox.PlaceholderText = "contoh: 3"
+tuyulBox.TextColor3 = Color3.new(1, 1, 1)
+tuyulBox.Font = Enum.Font.GothamBold
+tuyulBox.TextSize = Q
+tuyulBox.PlaceholderColor3 = Color3.fromRGB(90, 80, 120)
+tuyulBox.Parent = y2
+Instance.new("UICorner", tuyulBox).CornerRadius = UDim.new(0, 8)
+
+tuyulBoxPad = Instance.new("UIPadding", tuyulBox)
+tuyulBoxPad.PaddingLeft = UDim.new(0, 10)
+
+tuyulBoxStroke = Instance.new("UIStroke", tuyulBox)
+tuyulBoxStroke.Color = Color3.fromRGB(120, 50, 200)
+tuyulBoxStroke.Thickness = 1.5
+tuyulBoxStroke.Transparency = .2
+
+tuyulSetBtn = Instance.new("TextButton")
+tuyulSetBtn.Size = UDim2.new(.42, 0, 1, 0)
+tuyulSetBtn.Position = UDim2.new(.58, 0, 0, 0)
+tuyulSetBtn.BackgroundColor3 = Color3.fromRGB(100, 30, 200)
+tuyulSetBtn.Text = "TERAPKAN"
+tuyulSetBtn.TextColor3 = Color3.new(1, 1, 1)
+tuyulSetBtn.Font = Enum.Font.GothamBold
+tuyulSetBtn.TextSize = Q - 1
+tuyulSetBtn.Parent = y2
+Instance.new("UICorner", tuyulSetBtn).CornerRadius = UDim.new(0, 8)
+
+tuyulSetGrad = Instance.new("UIGradient", tuyulSetBtn)
+tuyulSetGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(150, 50, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(80, 20, 180))})
+
+tuyulStatus = Instance.new("TextLabel")
+tuyulStatus.Size = UDim2.new(1, 0, 0, 14)
+tuyulStatus.LayoutOrder = 6
+tuyulStatus.BackgroundTransparency = 1
+tuyulStatus.Text = "Limit: 3x jawab benar → mengalah"
+tuyulStatus.TextColor3 = Color3.fromRGB(180, 80, 255)
+tuyulStatus.Font = Enum.Font.GothamBold
+tuyulStatus.TextSize = 9
+tuyulStatus.TextXAlignment = Enum.TextXAlignment.Left
+tuyulStatus.Parent = H2
+F.tuyulStatus = tuyulStatus
+
+tuyulSetBtn.MouseButton1Click:Connect(function()
+    a()
+    local c = tonumber(tuyulBox.Text)
+    if c and (c >= 1 and c <= 20) then
+        ri = math.floor(c)
+        ai = 0
+        Ci = false
+        li = 0
+        tuyulStatus.Text = "Limit: " .. (ri .. "x jawab benar → mengalah ✅")
+        tuyulStatus.TextColor3 = Color3.fromRGB(80, 255, 120)
+    else
+        tuyulStatus.Text = "❌ Masukkan angka 1-20!"
+        tuyulStatus.TextColor3 = Color3.fromRGB(255, 80, 80)
+    end
+end)
+
+tuyulBox.FocusLost:Connect(function(c)
+    if c then
+        local c = tonumber(tuyulBox.Text)
+        if c and (c >= 1 and c <= 20) then
+            ri = math.floor(c)
+            ai = 0
+            tuyulStatus.Text = "Limit: " .. (ri .. "x jawab benar → mengalah ✅")
+            tuyulStatus.TextColor3 = Color3.fromRGB(80, 255, 120)
+        end
+    end
+end)
+
+local p2 = nil
+local P2 = Instance.new("TextButton")
+P2.Size = UDim2.new(1, 0, 0, Y and 42 or 38)
+P2.LayoutOrder = 1
+P2.BackgroundColor3 = Color3.fromRGB(25, 22, 38)
+P2.Text = "🎒  SKIN BAMBU: (pilih) ▼"
+P2.TextColor3 = Color3.new(1, 1, 1)
+P2.Font = Enum.Font.GothamBold
+P2.TextSize = Q
+P2.Parent = Rr
+Instance.new("UICorner", P2).CornerRadius = UDim.new(0, 9)
+
+SkinDropGrad = Instance.new("UIGradient", P2)
+SkinDropGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(90, 30, 190)), ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 15, 120))})
+
+SkinDropStroke = Instance.new("UIStroke", P2)
+SkinDropStroke.Color = Color3.fromRGB(150, 80, 255)
+SkinDropStroke.Thickness = 1.5
+SkinDropStroke.Transparency = .2
+
+local E2 = Instance.new("Frame")
+E2.Size = UDim2.new(1, 0, 0, 0)
+E2.BackgroundColor3 = Color3.fromRGB(14, 13, 22)
+E2.ClipsDescendants = true
+E2.BorderSizePixel = 0
+E2.LayoutOrder = 2
+E2.Parent = Rr
+Instance.new("UICorner", E2).CornerRadius = UDim.new(0, 9)
+
+SkinFrameStroke = Instance.new("UIStroke", E2)
+SkinFrameStroke.Color = Color3.fromRGB(70, 35, 130)
+SkinFrameStroke.Thickness = 1
+SkinFrameStroke.Transparency = .4
+
+local f2 = Instance.new("TextLabel")
+f2.Size = UDim2.new(1, -12, 0, 20)
+f2.BackgroundTransparency = 1
+f2.Text = "Status: belum pilih skin"
+f2.TextColor3 = Color3.fromRGB(160, 100, 255)
+f2.Font = Enum.Font.GothamBold
+f2.TextSize = 10
+f2.TextXAlignment = Enum.TextXAlignment.Left
+f2.LayoutOrder = 3
+f2.Parent = Rr
+
+F.SkinDropBtn = P2
+F.SkinDropGrad = SkinDropGrad
+F.SkinDropStroke = SkinDropStroke
+F.SkinFrameStroke = SkinFrameStroke
+F.SkinInfoText = f2
+
+SkinTpDivider = Instance.new("Frame")
+SkinTpDivider.Size = UDim2.new(1, 0, 0, 1)
+SkinTpDivider.BackgroundColor3 = Color3.fromRGB(40, 35, 60)
+SkinTpDivider.BorderSizePixel = 0
+SkinTpDivider.LayoutOrder = 4
+SkinTpDivider.Parent = Rr
+
+local o2 = Y and 40 or 34
+local e2 = false
+
+function refreshSkinDropUI()
+    for c, X in pairs(E2:GetChildren()) do
+        if X:IsA("Frame") or X:IsA("TextButton") or X:IsA("TextLabel") then
+            X:Destroy()
+        end
+    end
+    for c, X in ipairs(C) do
+        local V = Instance.new("Frame")
+        V.Size = UDim2.new(1, -12, 0, Y and 34 or 30)
+        V.Position = UDim2.new(0, 6, 0, (c - 1) * o2 + 6)
+        V.BackgroundColor3 = p2 == X.name and Color3.fromRGB(30, 25, 50) or Color3.fromRGB(20, 18, 30)
+        V.BorderSizePixel = 0
+        V.Parent = E2
+        Instance.new("UICorner", V).CornerRadius = UDim.new(0, 7)
+        
+        if p2 == X.name then
+            local c = Instance.new("UIStroke", V)
+            c.Color = X.color
+            c.Thickness = 1
+            c.Transparency = .2
+        end
+        
+        local L = Instance.new("Frame")
+        L.Size = UDim2.new(0, 10, 0, 10)
+        L.Position = UDim2.new(0, 10, .5, -5)
+        L.BackgroundColor3 = X.color
+        L.BorderSizePixel = 0
+        L.Parent = V
+        Instance.new("UICorner", L).CornerRadius = UDim.new(1, 0)
+        
+        local d = Instance.new("TextLabel")
+        d.Size = UDim2.new(1, -140, 1, 0)
+        d.Position = UDim2.new(0, 28, 0, 0)
+        d.BackgroundTransparency = 1
+        d.Text = X.label .. (p2 == X.name and "  ✔" or "")
+        d.TextColor3 = p2 == X.name and X.color or Color3.fromRGB(200, 190, 220)
+        d.Font = Enum.Font.GothamBold
+        d.TextSize = Q
+        d.TextXAlignment = Enum.TextXAlignment.Left
+        d.Parent = V
+        
+        local i = Instance.new("TextLabel")
+        i.Size = UDim2.new(0, 105, 1, 0)
+        i.Position = UDim2.new(1, -110, 0, 0)
+        i.BackgroundTransparency = 1
+        i.Text = X.rarity
+        i.TextColor3 = l[X.rarity] or Color3.fromRGB(180, 180, 180)
+        i.Font = Enum.Font.GothamBold
+        i.TextSize = 10
+        i.TextXAlignment = Enum.TextXAlignment.Right
+        i.Parent = V
+        
+        local j = Instance.new("TextButton")
+        j.Size = UDim2.new(1, 0, 1, 0)
+        j.BackgroundTransparency = 1
+        j.Text = ""
+        j.Parent = V
+        
+        j.MouseButton1Click:Connect(function()
+            a()
+            p2 = X.name
+            P2.Text = "🎒  SKIN BAMBU: " .. (X.label .. " ▼")
+            f2.Text = "Status: Terpilih " .. (X.label .. (" | " .. X.rarity))
+            f2.TextColor3 = l[X.rarity] or N[H] and N[H].logText or Color3.new(1, 1, 1)
+            s(X.name)
+            refreshSkinDropUI()
+        end)
+    end
+end
+
+P2.MouseButton1Click:Connect(function()
+    a()
+    e2 = not e2
+    P2.Text = "🎒  SKIN BAMBU: " .. ((p2 and p2:gsub("^Bambu", "") or "(pilih)") .. (e2 and " ▲" or " ▼"))
+    E2:TweenSize(UDim2.new(1, 0, 0, e2 and #C * o2 + 12 or 0), "Out", "Quart", .25, true)
+    refreshSkinDropUI()
+end)
+
+function createTpBtn(c, X, V)
+    local L = Instance.new("TextButton")
+    L.Size = UDim2.new(1, 0, 0, Y and 42 or 38)
+    L.LayoutOrder = V
+    L.BackgroundColor3 = Color3.fromRGB(18, 16, 26)
+    L.Text = c
+    L.TextColor3 = Color3.fromRGB(200, 190, 220)
+    L.Font = Enum.Font.GothamBold
+    L.TextSize = Q
+    L.Parent = Rr
+    Instance.new("UICorner", L).CornerRadius = UDim.new(0, 9)
+    
+    local i = Instance.new("UIStroke", L)
+    i.Color = Color3.fromRGB(70, 35, 130)
+    i.Thickness = 1
+    i.Transparency = .4
+    
+    local j = c
+    L.MouseButton1Click:Connect(function()
+        a()
+        local c = d:GetAttribute("CurrentTable") ~= nil
+        if c then
+            L.Text = "⛔ Tidak bisa saat match!"
+            L.TextColor3 = Color3.fromRGB(255, 80, 80)
+            task.delay(2, function()
+                L.Text = j
+                L.TextColor3 = Color3.fromRGB(200, 190, 220)
+            end)
+            return
+        end
+        local V = workspace:FindFirstChild(X)
+        if not V then
+            L.Text = "⚠️ Folder tidak ada!"
+            L.TextColor3 = Color3.fromRGB(255, 180, 50)
+            task.delay(2, function()
+                L.Text = j
+                L.TextColor3 = Color3.fromRGB(200, 190, 220)
+            end)
+            print("⚠️ " .. (X .. " tidak ditemukan!"))
+            return
+        end
+        local i
+        for c, X in ipairs(V:GetDescendants()) do
+            if X:IsA("BasePart") then
+                i = X
+                break
+            end
+        end
+        if not i then
+            print("⚠️ Tidak ada BasePart di " .. (X .. "!"))
+            return
+        end
+        local g = d.Character and d.Character:FindFirstChild("HumanoidRootPart")
+        if g then
+            g.CFrame = CFrame.new(i.Position + Vector3.new(0, 5, 0))
+            L.Text = "✅ TP Berhasil!"
+            L.TextColor3 = Color3.fromRGB(80, 255, 120)
+            task.delay(2, function()
+                L.Text = j
+                L.TextColor3 = Color3.fromRGB(200, 190, 220)
+            end)
+            print("⚡ TP ke " .. X)
+        end
+    end)
+    
+    task.spawn(function()
+        while task.wait(1) do
+            if not g then break end
+            local c = d:GetAttribute("CurrentTable") ~= nil
+            i.Transparency = c and 0 or .4
+            i.Color = c and Color3.fromRGB(180, 40, 50) or Color3.fromRGB(70, 35, 130)
+            L.TextColor3 = c and Color3.fromRGB(150, 140, 170) or Color3.fromRGB(200, 190, 220)
+        end
+    end)
+    return L
+end
+
+createTpBtn("🌋  TELEPORT KE BAMBU LAVA", "ParkourBambu2", 5)
+createTpBtn("🏠  TELEPORT KE LOBBY", "MainSpawn", 6)
+
+K(H)
+
+U.MouseButton1Click:Connect(function()
+    O:Destroy()
+    g = false
+end)
+
+task.spawn(function()
+    while task.wait() do
+        if not g then break end
+        n.TextColor3 = Color3.fromHSV((tick() % 5) / 5, .7, 1)
+    end
+end)
